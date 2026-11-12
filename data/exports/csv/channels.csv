@@ -1,0 +1,9 @@
+channel_id,name,channel_type,cost_structure,is_active,created_at
+CHN-PAID-SEARCH,Paid Search (Google/Bing Ads),ONLINE,CPC,True,2025-12-01T00:00:00
+CHN-ORGANIC,Organic Search (SEO),ONLINE,FLAT,True,2025-12-01T00:00:00
+CHN-EMAIL,Email Marketing,ONLINE,FLAT,True,2025-12-01T00:00:00
+CHN-SOCIAL,Paid Social (LinkedIn/Meta),ONLINE,CPC,True,2025-12-01T00:00:00
+CHN-DISPLAY,Display & Programmatic Ads,ONLINE,CPM,True,2025-12-01T00:00:00
+CHN-EVENT,Trade Shows & Webinars,OFFLINE,FLAT,True,2025-12-01T00:00:00
+CHN-REFERRAL,Partner & Affiliate Referral,ONLINE,COMMISSION,True,2025-12-01T00:00:00
+CHN-DIRECT,Direct Mail & Field Outreach,OFFLINE,FLAT,True,2025-12-01T00:00:00

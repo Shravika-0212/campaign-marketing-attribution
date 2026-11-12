@@ -1,0 +1,642 @@
+[
+  {
+    "case_id": "GT-ANO1-ORD-2026-000004",
+    "entity_type": "ORDER",
+    "entity_id": "ORD-2026-000004",
+    "anomaly_type": "DUPLICATE_REVENUE",
+    "expected_decision": "REJECT_DUPLICATE_REVENUE",
+    "severity": "CRITICAL",
+    "description": "Duplicate order ORD-2026-000004 references existing order number YF-ORD-00000003 and opportunity OPP-2026-000003.",
+    "related_ids": "ORD-2026-000003,OPP-2026-000003"
+  },
+  {
+    "case_id": "GT-ANO1-ORD-2026-000013",
+    "entity_type": "ORDER",
+    "entity_id": "ORD-2026-000013",
+    "anomaly_type": "DUPLICATE_REVENUE",
+    "expected_decision": "REJECT_DUPLICATE_REVENUE",
+    "severity": "CRITICAL",
+    "description": "Duplicate order ORD-2026-000013 references existing order number YF-ORD-00000012 and opportunity OPP-2026-000012.",
+    "related_ids": "ORD-2026-000012,OPP-2026-000012"
+  },
+  {
+    "case_id": "GT-ANO1-ORD-2026-000015",
+    "entity_type": "ORDER",
+    "entity_id": "ORD-2026-000015",
+    "anomaly_type": "DUPLICATE_REVENUE",
+    "expected_decision": "REJECT_DUPLICATE_REVENUE",
+    "severity": "CRITICAL",
+    "description": "Duplicate order ORD-2026-000015 references existing order number YF-ORD-00000014 and opportunity OPP-2026-000015.",
+    "related_ids": "ORD-2026-000014,OPP-2026-000015"
+  },
+  {
+    "case_id": "GT-ANO1-ORD-2026-000017",
+    "entity_type": "ORDER",
+    "entity_id": "ORD-2026-000017",
+    "anomaly_type": "DUPLICATE_REVENUE",
+    "expected_decision": "REJECT_DUPLICATE_REVENUE",
+    "severity": "CRITICAL",
+    "description": "Duplicate order ORD-2026-000017 references existing order number YF-ORD-00000016 and opportunity OPP-2026-000016.",
+    "related_ids": "ORD-2026-000016,OPP-2026-000016"
+  },
+  {
+    "case_id": "GT-ANO1-ORD-2026-000020",
+    "entity_type": "ORDER",
+    "entity_id": "ORD-2026-000020",
+    "anomaly_type": "DUPLICATE_REVENUE",
+    "expected_decision": "REJECT_DUPLICATE_REVENUE",
+    "severity": "CRITICAL",
+    "description": "Duplicate order ORD-2026-000020 references existing order number YF-ORD-00000019 and opportunity OPP-2026-000018.",
+    "related_ids": "ORD-2026-000019,OPP-2026-000018"
+  },
+  {
+    "case_id": "GT-ANO1-ORD-2026-000025",
+    "entity_type": "ORDER",
+    "entity_id": "ORD-2026-000025",
+    "anomaly_type": "DUPLICATE_REVENUE",
+    "expected_decision": "REJECT_DUPLICATE_REVENUE",
+    "severity": "CRITICAL",
+    "description": "Duplicate order ORD-2026-000025 references existing order number YF-ORD-00000024 and opportunity OPP-2026-000022.",
+    "related_ids": "ORD-2026-000024,OPP-2026-000022"
+  },
+  {
+    "case_id": "GT-ANO1-ORD-2026-000028",
+    "entity_type": "ORDER",
+    "entity_id": "ORD-2026-000028",
+    "anomaly_type": "DUPLICATE_REVENUE",
+    "expected_decision": "REJECT_DUPLICATE_REVENUE",
+    "severity": "CRITICAL",
+    "description": "Duplicate order ORD-2026-000028 references existing order number YF-ORD-00000027 and opportunity OPP-2026-000024.",
+    "related_ids": "ORD-2026-000027,OPP-2026-000024"
+  },
+  {
+    "case_id": "GT-ANO1-ORD-2026-000031",
+    "entity_type": "ORDER",
+    "entity_id": "ORD-2026-000031",
+    "anomaly_type": "DUPLICATE_REVENUE",
+    "expected_decision": "REJECT_DUPLICATE_REVENUE",
+    "severity": "CRITICAL",
+    "description": "Duplicate order ORD-2026-000031 references existing order number YF-ORD-00000030 and opportunity OPP-2026-000028.",
+    "related_ids": "ORD-2026-000030,OPP-2026-000028"
+  },
+  {
+    "case_id": "GT-ANO1-ORD-2026-000034",
+    "entity_type": "ORDER",
+    "entity_id": "ORD-2026-000034",
+    "anomaly_type": "DUPLICATE_REVENUE",
+    "expected_decision": "REJECT_DUPLICATE_REVENUE",
+    "severity": "CRITICAL",
+    "description": "Duplicate order ORD-2026-000034 references existing order number YF-ORD-00000033 and opportunity OPP-2026-000031.",
+    "related_ids": "ORD-2026-000033,OPP-2026-000031"
+  },
+  {
+    "case_id": "GT-ANO1-ORD-2026-000037",
+    "entity_type": "ORDER",
+    "entity_id": "ORD-2026-000037",
+    "anomaly_type": "DUPLICATE_REVENUE",
+    "expected_decision": "REJECT_DUPLICATE_REVENUE",
+    "severity": "CRITICAL",
+    "description": "Duplicate order ORD-2026-000037 references existing order number YF-ORD-00000036 and opportunity OPP-2026-000033.",
+    "related_ids": "ORD-2026-000036,OPP-2026-000033"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000016-000006",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000016-000006",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000016-000006 occurred at 2026-12-13T04:00:00 which is strictly after conversion at 2026-12-07T04:00:00.",
+    "related_ids": "ORD-2026-000001,OPP-2026-000001"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000061-000004",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000061-000004",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000061-000004 occurred at 2026-09-11T05:00:00 which is strictly after conversion at 2026-08-12T05:00:00.",
+    "related_ids": "ORD-2026-000009,OPP-2026-000009"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000064-000003",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000064-000003",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000064-000003 occurred at 2026-12-21T16:00:00 which is strictly after conversion at 2026-12-19T16:00:00.",
+    "related_ids": "ORD-2026-000010,OPP-2026-000010"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000076-000005",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000076-000005",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000076-000005 occurred at 2026-04-14T17:00:00 which is strictly after conversion at 2026-04-01T17:00:00.",
+    "related_ids": "ORD-2026-000011,OPP-2026-000011"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000106-000007",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000106-000007",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000106-000007 occurred at 2027-01-12T13:00:00 which is strictly after conversion at 2027-01-06T13:00:00.",
+    "related_ids": "ORD-2026-000016,OPP-2026-000016"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000112-000007",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000112-000007",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000112-000007 occurred at 2026-06-30T20:00:00 which is strictly after conversion at 2026-06-15T20:00:00.",
+    "related_ids": "ORD-2026-000018,OPP-2026-000017"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000116-000005",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000116-000005",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000116-000005 occurred at 2027-02-04T04:00:00 which is strictly after conversion at 2027-01-05T04:00:00.",
+    "related_ids": "ORD-2026-000021,OPP-2026-000019"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000121-000009",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000121-000009",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000121-000009 occurred at 2026-08-27T15:00:00 which is strictly after conversion at 2026-08-02T15:00:00.",
+    "related_ids": "ORD-2026-000023,OPP-2026-000021"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000212-000008",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000212-000008",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000212-000008 occurred at 2026-07-13T15:00:00 which is strictly after conversion at 2026-07-09T15:00:00.",
+    "related_ids": "ORD-2026-000043,OPP-2026-000042"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000220-000003",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000220-000003",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000220-000003 occurred at 2026-07-26T17:00:00 which is strictly after conversion at 2026-06-28T17:00:00.",
+    "related_ids": "ORD-2026-000044,OPP-2026-000043"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000221-000005",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000221-000005",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000221-000005 occurred at 2026-12-22T12:00:00 which is strictly after conversion at 2026-11-30T12:00:00.",
+    "related_ids": "ORD-2026-000045,OPP-2026-000044"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000239-000003",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000239-000003",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000239-000003 occurred at 2026-09-27T21:00:00 which is strictly after conversion at 2026-08-30T21:00:00.",
+    "related_ids": "ORD-2026-000047,OPP-2026-000046"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000250-000007",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000250-000007",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000250-000007 occurred at 2026-07-19T16:00:00 which is strictly after conversion at 2026-07-16T16:00:00.",
+    "related_ids": "ORD-2026-000050,OPP-2026-000049"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000303-000004",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000303-000004",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000303-000004 occurred at 2026-12-25T20:00:00 which is strictly after conversion at 2026-11-25T20:00:00.",
+    "related_ids": "ORD-2026-000059,OPP-2026-000059"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000306-000009",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000306-000009",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000306-000009 occurred at 2026-06-02T22:00:00 which is strictly after conversion at 2026-05-21T22:00:00.",
+    "related_ids": "ORD-2026-000060,OPP-2026-000060"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000318-000004",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000318-000004",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000318-000004 occurred at 2026-07-13T23:00:00 which is strictly after conversion at 2026-06-25T23:00:00.",
+    "related_ids": "ORD-2026-000061,OPP-2026-000061"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000324-000007",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000324-000007",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000324-000007 occurred at 2026-06-01T07:00:00 which is strictly after conversion at 2026-05-10T07:00:00.",
+    "related_ids": "ORD-2026-000062,OPP-2026-000062"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000364-000004",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000364-000004",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000364-000004 occurred at 2026-08-13T05:00:00 which is strictly after conversion at 2026-07-27T05:00:00.",
+    "related_ids": "ORD-2026-000067,OPP-2026-000070"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000427-000003",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000427-000003",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000427-000003 occurred at 2026-08-19T17:00:00 which is strictly after conversion at 2026-07-26T17:00:00.",
+    "related_ids": "ORD-2026-000074,OPP-2026-000079"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000445-000007",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000445-000007",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000445-000007 occurred at 2027-01-24T04:00:00 which is strictly after conversion at 2027-01-04T04:00:00.",
+    "related_ids": "ORD-2026-000078,OPP-2026-000084"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000452-000006",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000452-000006",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000452-000006 occurred at 2026-09-16T12:00:00 which is strictly after conversion at 2026-09-12T12:00:00.",
+    "related_ids": "ORD-2026-000080,OPP-2026-000086"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000455-000009",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000455-000009",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000455-000009 occurred at 2026-12-23T03:00:00 which is strictly after conversion at 2026-11-23T03:00:00.",
+    "related_ids": "ORD-2026-000081,OPP-2026-000087"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000467-000009",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000467-000009",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000467-000009 occurred at 2026-04-12T09:00:00 which is strictly after conversion at 2026-04-01T09:00:00.",
+    "related_ids": "ORD-2026-000083,OPP-2026-000093"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000476-000006",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000476-000006",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000476-000006 occurred at 2027-01-06T15:00:00 which is strictly after conversion at 2026-12-20T15:00:00.",
+    "related_ids": "ORD-2026-000085,OPP-2026-000095"
+  },
+  {
+    "case_id": "GT-ANO2-TOUCH-CON-2026-000489-000004",
+    "entity_type": "TOUCHPOINT",
+    "entity_id": "TOUCH-CON-2026-000489-000004",
+    "anomaly_type": "POST_CONVERSION_TOUCHPOINT",
+    "expected_decision": "EXCLUDE_FROM_ATTRIBUTION",
+    "severity": "HIGH",
+    "description": "Touchpoint TOUCH-CON-2026-000489-000004 occurred at 2027-01-21T12:00:00 which is strictly after conversion at 2026-12-29T12:00:00.",
+    "related_ids": "ORD-2026-000086,OPP-2026-000097"
+  },
+  {
+    "case_id": "GT-ANO3-CST-2026-000102",
+    "entity_type": "COST_RECORD",
+    "entity_id": "CST-2026-000102",
+    "anomaly_type": "CURRENCY_MISMATCH",
+    "expected_decision": "FLAG_CURRENCY_MISMATCH_EXCLUDE_FROM_ROI",
+    "severity": "MEDIUM",
+    "description": "Cost record CST-2026-000102 has currency 'EUR' which differs from base currency 'USD'.",
+    "related_ids": "CMP-2026-000026"
+  },
+  {
+    "case_id": "GT-ANO3-CST-2026-000125",
+    "entity_type": "COST_RECORD",
+    "entity_id": "CST-2026-000125",
+    "anomaly_type": "CURRENCY_MISMATCH",
+    "expected_decision": "FLAG_CURRENCY_MISMATCH_EXCLUDE_FROM_ROI",
+    "severity": "MEDIUM",
+    "description": "Cost record CST-2026-000125 has currency 'GBP' which differs from base currency 'USD'.",
+    "related_ids": "CMP-2026-000031"
+  },
+  {
+    "case_id": "GT-ANO3-CST-2026-000139",
+    "entity_type": "COST_RECORD",
+    "entity_id": "CST-2026-000139",
+    "anomaly_type": "CURRENCY_MISMATCH",
+    "expected_decision": "FLAG_CURRENCY_MISMATCH_EXCLUDE_FROM_ROI",
+    "severity": "MEDIUM",
+    "description": "Cost record CST-2026-000139 has currency 'EUR' which differs from base currency 'USD'.",
+    "related_ids": "CMP-2026-000034"
+  },
+  {
+    "case_id": "GT-ANO3-CST-2026-000143",
+    "entity_type": "COST_RECORD",
+    "entity_id": "CST-2026-000143",
+    "anomaly_type": "CURRENCY_MISMATCH",
+    "expected_decision": "FLAG_CURRENCY_MISMATCH_EXCLUDE_FROM_ROI",
+    "severity": "MEDIUM",
+    "description": "Cost record CST-2026-000143 has currency 'GBP' which differs from base currency 'USD'.",
+    "related_ids": "CMP-2026-000035"
+  },
+  {
+    "case_id": "GT-ANO3-CST-2026-000187",
+    "entity_type": "COST_RECORD",
+    "entity_id": "CST-2026-000187",
+    "anomaly_type": "CURRENCY_MISMATCH",
+    "expected_decision": "FLAG_CURRENCY_MISMATCH_EXCLUDE_FROM_ROI",
+    "severity": "MEDIUM",
+    "description": "Cost record CST-2026-000187 has currency 'EUR' which differs from base currency 'USD'.",
+    "related_ids": "CMP-2026-000043"
+  },
+  {
+    "case_id": "GT-ANO4-CMP-2026-000001",
+    "entity_type": "CAMPAIGN",
+    "entity_id": "CMP-2026-000001",
+    "anomaly_type": "MISSING_CAMPAIGN_COST",
+    "expected_decision": "FLAG_MISSING_COST_MARK_ROI_UNAVAILABLE",
+    "severity": "HIGH",
+    "description": "Campaign CMP-2026-000001 has marketing activity but zero recorded costs.",
+    "related_ids": "CMP-2026-000001"
+  },
+  {
+    "case_id": "GT-ANO4-CMP-2026-000002",
+    "entity_type": "CAMPAIGN",
+    "entity_id": "CMP-2026-000002",
+    "anomaly_type": "MISSING_CAMPAIGN_COST",
+    "expected_decision": "FLAG_MISSING_COST_MARK_ROI_UNAVAILABLE",
+    "severity": "HIGH",
+    "description": "Campaign CMP-2026-000002 has marketing activity but zero recorded costs.",
+    "related_ids": "CMP-2026-000002"
+  },
+  {
+    "case_id": "GT-ANO4-CMP-2026-000003",
+    "entity_type": "CAMPAIGN",
+    "entity_id": "CMP-2026-000003",
+    "anomaly_type": "MISSING_CAMPAIGN_COST",
+    "expected_decision": "FLAG_MISSING_COST_MARK_ROI_UNAVAILABLE",
+    "severity": "HIGH",
+    "description": "Campaign CMP-2026-000003 has marketing activity but zero recorded costs.",
+    "related_ids": "CMP-2026-000003"
+  },
+  {
+    "case_id": "GT-ANO4-CMP-2026-000004",
+    "entity_type": "CAMPAIGN",
+    "entity_id": "CMP-2026-000004",
+    "anomaly_type": "MISSING_CAMPAIGN_COST",
+    "expected_decision": "FLAG_MISSING_COST_MARK_ROI_UNAVAILABLE",
+    "severity": "HIGH",
+    "description": "Campaign CMP-2026-000004 has marketing activity but zero recorded costs.",
+    "related_ids": "CMP-2026-000004"
+  },
+  {
+    "case_id": "GT-ANO4-CMP-2026-000005",
+    "entity_type": "CAMPAIGN",
+    "entity_id": "CMP-2026-000005",
+    "anomaly_type": "MISSING_CAMPAIGN_COST",
+    "expected_decision": "FLAG_MISSING_COST_MARK_ROI_UNAVAILABLE",
+    "severity": "HIGH",
+    "description": "Campaign CMP-2026-000005 has marketing activity but zero recorded costs.",
+    "related_ids": "CMP-2026-000005"
+  },
+  {
+    "case_id": "GT-ANO5-SES-2026-000047",
+    "entity_type": "WEB_SESSION",
+    "entity_id": "SES-2026-000047",
+    "anomaly_type": "UNSUPPORTED_IDENTITY_LINK",
+    "expected_decision": "QUARANTINE_IDENTITY_LINK",
+    "severity": "MEDIUM",
+    "description": "Session SES-2026-000047 linked to contact CON-2026-000010 without any supporting identity evidence in contact_identities.",
+    "related_ids": "CON-2026-000010"
+  },
+  {
+    "case_id": "GT-ANO5-SES-2026-000048",
+    "entity_type": "WEB_SESSION",
+    "entity_id": "SES-2026-000048",
+    "anomaly_type": "UNSUPPORTED_IDENTITY_LINK",
+    "expected_decision": "QUARANTINE_IDENTITY_LINK",
+    "severity": "MEDIUM",
+    "description": "Session SES-2026-000048 linked to contact CON-2026-000010 without any supporting identity evidence in contact_identities.",
+    "related_ids": "CON-2026-000010"
+  },
+  {
+    "case_id": "GT-ANO5-SES-2026-000098",
+    "entity_type": "WEB_SESSION",
+    "entity_id": "SES-2026-000098",
+    "anomaly_type": "UNSUPPORTED_IDENTITY_LINK",
+    "expected_decision": "QUARANTINE_IDENTITY_LINK",
+    "severity": "MEDIUM",
+    "description": "Session SES-2026-000098 linked to contact CON-2026-000019 without any supporting identity evidence in contact_identities.",
+    "related_ids": "CON-2026-000019"
+  },
+  {
+    "case_id": "GT-ANO5-SES-2026-000099",
+    "entity_type": "WEB_SESSION",
+    "entity_id": "SES-2026-000099",
+    "anomaly_type": "UNSUPPORTED_IDENTITY_LINK",
+    "expected_decision": "QUARANTINE_IDENTITY_LINK",
+    "severity": "MEDIUM",
+    "description": "Session SES-2026-000099 linked to contact CON-2026-000019 without any supporting identity evidence in contact_identities.",
+    "related_ids": "CON-2026-000019"
+  },
+  {
+    "case_id": "GT-ANO5-SES-2026-000100",
+    "entity_type": "WEB_SESSION",
+    "entity_id": "SES-2026-000100",
+    "anomaly_type": "UNSUPPORTED_IDENTITY_LINK",
+    "expected_decision": "QUARANTINE_IDENTITY_LINK",
+    "severity": "MEDIUM",
+    "description": "Session SES-2026-000100 linked to contact CON-2026-000019 without any supporting identity evidence in contact_identities.",
+    "related_ids": "CON-2026-000019"
+  },
+  {
+    "case_id": "GT-ANO5-SES-2026-000101",
+    "entity_type": "WEB_SESSION",
+    "entity_id": "SES-2026-000101",
+    "anomaly_type": "UNSUPPORTED_IDENTITY_LINK",
+    "expected_decision": "QUARANTINE_IDENTITY_LINK",
+    "severity": "MEDIUM",
+    "description": "Session SES-2026-000101 linked to contact CON-2026-000019 without any supporting identity evidence in contact_identities.",
+    "related_ids": "CON-2026-000019"
+  },
+  {
+    "case_id": "GT-ANO5-SES-2026-000179",
+    "entity_type": "WEB_SESSION",
+    "entity_id": "SES-2026-000179",
+    "anomaly_type": "UNSUPPORTED_IDENTITY_LINK",
+    "expected_decision": "QUARANTINE_IDENTITY_LINK",
+    "severity": "MEDIUM",
+    "description": "Session SES-2026-000179 linked to contact CON-2026-000032 without any supporting identity evidence in contact_identities.",
+    "related_ids": "CON-2026-000032"
+  },
+  {
+    "case_id": "GT-ANO5-SES-2026-000215",
+    "entity_type": "WEB_SESSION",
+    "entity_id": "SES-2026-000215",
+    "anomaly_type": "UNSUPPORTED_IDENTITY_LINK",
+    "expected_decision": "QUARANTINE_IDENTITY_LINK",
+    "severity": "MEDIUM",
+    "description": "Session SES-2026-000215 linked to contact CON-2026-000041 without any supporting identity evidence in contact_identities.",
+    "related_ids": "CON-2026-000041"
+  },
+  {
+    "case_id": "GT-ANO5-SES-2026-000216",
+    "entity_type": "WEB_SESSION",
+    "entity_id": "SES-2026-000216",
+    "anomaly_type": "UNSUPPORTED_IDENTITY_LINK",
+    "expected_decision": "QUARANTINE_IDENTITY_LINK",
+    "severity": "MEDIUM",
+    "description": "Session SES-2026-000216 linked to contact CON-2026-000041 without any supporting identity evidence in contact_identities.",
+    "related_ids": "CON-2026-000041"
+  },
+  {
+    "case_id": "GT-ANO5-SES-2026-000217",
+    "entity_type": "WEB_SESSION",
+    "entity_id": "SES-2026-000217",
+    "anomaly_type": "UNSUPPORTED_IDENTITY_LINK",
+    "expected_decision": "QUARANTINE_IDENTITY_LINK",
+    "severity": "MEDIUM",
+    "description": "Session SES-2026-000217 linked to contact CON-2026-000041 without any supporting identity evidence in contact_identities.",
+    "related_ids": "CON-2026-000041"
+  },
+  {
+    "case_id": "GT-ANO5-SES-2026-000297",
+    "entity_type": "WEB_SESSION",
+    "entity_id": "SES-2026-000297",
+    "anomaly_type": "UNSUPPORTED_IDENTITY_LINK",
+    "expected_decision": "QUARANTINE_IDENTITY_LINK",
+    "severity": "MEDIUM",
+    "description": "Session SES-2026-000297 linked to contact CON-2026-000059 without any supporting identity evidence in contact_identities.",
+    "related_ids": "CON-2026-000059"
+  },
+  {
+    "case_id": "GT-ANO5-SES-2026-000298",
+    "entity_type": "WEB_SESSION",
+    "entity_id": "SES-2026-000298",
+    "anomaly_type": "UNSUPPORTED_IDENTITY_LINK",
+    "expected_decision": "QUARANTINE_IDENTITY_LINK",
+    "severity": "MEDIUM",
+    "description": "Session SES-2026-000298 linked to contact CON-2026-000059 without any supporting identity evidence in contact_identities.",
+    "related_ids": "CON-2026-000059"
+  },
+  {
+    "case_id": "GT-ANO5-SES-2026-000299",
+    "entity_type": "WEB_SESSION",
+    "entity_id": "SES-2026-000299",
+    "anomaly_type": "UNSUPPORTED_IDENTITY_LINK",
+    "expected_decision": "QUARANTINE_IDENTITY_LINK",
+    "severity": "MEDIUM",
+    "description": "Session SES-2026-000299 linked to contact CON-2026-000059 without any supporting identity evidence in contact_identities.",
+    "related_ids": "CON-2026-000059"
+  },
+  {
+    "case_id": "GT-ANO5-SES-2026-000300",
+    "entity_type": "WEB_SESSION",
+    "entity_id": "SES-2026-000300",
+    "anomaly_type": "UNSUPPORTED_IDENTITY_LINK",
+    "expected_decision": "QUARANTINE_IDENTITY_LINK",
+    "severity": "MEDIUM",
+    "description": "Session SES-2026-000300 linked to contact CON-2026-000060 without any supporting identity evidence in contact_identities.",
+    "related_ids": "CON-2026-000060"
+  },
+  {
+    "case_id": "GT-ANO5-SES-2026-000301",
+    "entity_type": "WEB_SESSION",
+    "entity_id": "SES-2026-000301",
+    "anomaly_type": "UNSUPPORTED_IDENTITY_LINK",
+    "expected_decision": "QUARANTINE_IDENTITY_LINK",
+    "severity": "MEDIUM",
+    "description": "Session SES-2026-000301 linked to contact CON-2026-000060 without any supporting identity evidence in contact_identities.",
+    "related_ids": "CON-2026-000060"
+  },
+  {
+    "case_id": "GT-ANO5-SES-2026-000302",
+    "entity_type": "WEB_SESSION",
+    "entity_id": "SES-2026-000302",
+    "anomaly_type": "UNSUPPORTED_IDENTITY_LINK",
+    "expected_decision": "QUARANTINE_IDENTITY_LINK",
+    "severity": "MEDIUM",
+    "description": "Session SES-2026-000302 linked to contact CON-2026-000060 without any supporting identity evidence in contact_identities.",
+    "related_ids": "CON-2026-000060"
+  },
+  {
+    "case_id": "GT-ANO5-SES-2026-000303",
+    "entity_type": "WEB_SESSION",
+    "entity_id": "SES-2026-000303",
+    "anomaly_type": "UNSUPPORTED_IDENTITY_LINK",
+    "expected_decision": "QUARANTINE_IDENTITY_LINK",
+    "severity": "MEDIUM",
+    "description": "Session SES-2026-000303 linked to contact CON-2026-000060 without any supporting identity evidence in contact_identities.",
+    "related_ids": "CON-2026-000060"
+  },
+  {
+    "case_id": "GT-ANO5-SES-2026-000304",
+    "entity_type": "WEB_SESSION",
+    "entity_id": "SES-2026-000304",
+    "anomaly_type": "UNSUPPORTED_IDENTITY_LINK",
+    "expected_decision": "QUARANTINE_IDENTITY_LINK",
+    "severity": "MEDIUM",
+    "description": "Session SES-2026-000304 linked to contact CON-2026-000060 without any supporting identity evidence in contact_identities.",
+    "related_ids": "CON-2026-000060"
+  },
+  {
+    "case_id": "GT-ANO5-SES-2026-000305",
+    "entity_type": "WEB_SESSION",
+    "entity_id": "SES-2026-000305",
+    "anomaly_type": "UNSUPPORTED_IDENTITY_LINK",
+    "expected_decision": "QUARANTINE_IDENTITY_LINK",
+    "severity": "MEDIUM",
+    "description": "Session SES-2026-000305 linked to contact CON-2026-000060 without any supporting identity evidence in contact_identities.",
+    "related_ids": "CON-2026-000060"
+  }
+]

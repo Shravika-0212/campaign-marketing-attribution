@@ -1,0 +1,179 @@
+{
+  "validation_timestamp": "2026-11-12T04:57:20.353776",
+  "summary": {
+    "total_rules": 15,
+    "rules_passed": 10,
+    "rules_warned": 5,
+    "rules_failed": 0,
+    "total_records_checked": 23210,
+    "total_records_passed": 23016,
+    "total_records_failed": 194
+  },
+  "rule_results": [
+    {
+      "rule_code": "RULE-01",
+      "rule_name": "Primary Key Uniqueness",
+      "status": "PASS",
+      "records_checked": 6193,
+      "records_passed": 6193,
+      "records_failed": 0,
+      "details": [
+        "All primary keys are strictly unique across core tables."
+      ]
+    },
+    {
+      "rule_code": "RULE-02",
+      "rule_name": "Foreign Key Integrity",
+      "status": "PASS",
+      "records_checked": 4978,
+      "records_passed": 4978,
+      "records_failed": 0,
+      "details": [
+        "No orphaned foreign key records found."
+      ]
+    },
+    {
+      "rule_code": "RULE-03",
+      "rule_name": "Valid Entity Relationships",
+      "status": "PASS",
+      "records_checked": 165,
+      "records_passed": 165,
+      "records_failed": 0,
+      "details": [
+        "All orders maintain valid opportunity and contact relationships."
+      ]
+    },
+    {
+      "rule_code": "RULE-04",
+      "rule_name": "Allowed Enum Values",
+      "status": "PASS",
+      "records_checked": 200,
+      "records_passed": 200,
+      "records_failed": 0,
+      "details": [
+        "All lifecycle and stage enums are valid."
+      ]
+    },
+    {
+      "rule_code": "RULE-05",
+      "rule_name": "Date Chronological Ordering",
+      "status": "PASS",
+      "records_checked": 4753,
+      "records_passed": 4753,
+      "records_failed": 0,
+      "details": [
+        "All session timestamps respect temporal ordering."
+      ]
+    },
+    {
+      "rule_code": "RULE-06",
+      "rule_name": "Lifecycle Transitions",
+      "status": "WARN",
+      "records_checked": 155,
+      "records_passed": 0,
+      "records_failed": 155,
+      "details": [
+        "155 converted contacts have not transitioned to CUSTOMER stage."
+      ]
+    },
+    {
+      "rule_code": "RULE-07",
+      "rule_name": "Duplicate Revenue Records",
+      "status": "WARN",
+      "records_checked": 165,
+      "records_passed": 155,
+      "records_failed": 10,
+      "details": [
+        "10 duplicate order records flagged and quarantined."
+      ]
+    },
+    {
+      "rule_code": "RULE-08",
+      "rule_name": "Arithmetic Non-Negative Reconciliation",
+      "status": "PASS",
+      "records_checked": 165,
+      "records_passed": 165,
+      "records_failed": 0,
+      "details": [
+        "All order amounts are positive."
+      ]
+    },
+    {
+      "rule_code": "RULE-09",
+      "rule_name": "Campaign Budget Consistency",
+      "status": "PASS",
+      "records_checked": 50,
+      "records_passed": 50,
+      "records_failed": 0,
+      "details": [
+        "All campaign budgets are positive and validated."
+      ]
+    },
+    {
+      "rule_code": "RULE-10",
+      "rule_name": "Revenue Consistency (Opportunity vs Order)",
+      "status": "PASS",
+      "records_checked": 155,
+      "records_passed": 155,
+      "records_failed": 0,
+      "details": [
+        "All order amounts reconcile with opportunity expected revenue."
+      ]
+    },
+    {
+      "rule_code": "RULE-11",
+      "rule_name": "Attribution Credit Totaling 100%",
+      "status": "PASS",
+      "records_checked": 155,
+      "records_passed": 155,
+      "records_failed": 0,
+      "details": [
+        "Multi-touch credit sums to exactly 100% per converted order."
+      ]
+    },
+    {
+      "rule_code": "RULE-12",
+      "rule_name": "Unsupported Identity Links",
+      "status": "WARN",
+      "records_checked": 4753,
+      "records_passed": 4734,
+      "records_failed": 19,
+      "details": [
+        "19 sessions linked to contacts without identity evidence (Anomaly 5 quarantined)."
+      ]
+    },
+    {
+      "rule_code": "RULE-13",
+      "rule_name": "Missing Campaign Costs Detection",
+      "status": "WARN",
+      "records_checked": 50,
+      "records_passed": 45,
+      "records_failed": 5,
+      "details": [
+        "5 campaigns have zero cost records (Anomaly 4 marked ROI unavailable)."
+      ]
+    },
+    {
+      "rule_code": "RULE-14",
+      "rule_name": "Currency Compatibility",
+      "status": "WARN",
+      "records_checked": 230,
+      "records_passed": 225,
+      "records_failed": 5,
+      "details": [
+        "5 cost records have currency incompatible with base 'USD' (Anomaly 3 quarantined)."
+      ]
+    },
+    {
+      "rule_code": "RULE-15",
+      "rule_name": "Touchpoints After Conversion Exclusion",
+      "status": "PASS",
+      "records_checked": 1043,
+      "records_passed": 1043,
+      "records_failed": 0,
+      "details": [
+        "Attribution engine correctly excluded all post-conversion touchpoints."
+      ]
+    }
+  ]
+}

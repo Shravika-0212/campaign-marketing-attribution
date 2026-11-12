@@ -1,0 +1,107 @@
+[
+  {
+    "audience_id": "AUD-2026-000001",
+    "name": "Audience Segment - B2B Enterprise #1",
+    "segment_type": "B2B_ENTERPRISE",
+    "target_criteria": "Targeting companies size 10-500 in B2B_ENTERPRISE",
+    "created_at": "2025-12-10T00:00:00"
+  },
+  {
+    "audience_id": "AUD-2026-000002",
+    "name": "Audience Segment - Smb Growth #2",
+    "segment_type": "SMB_GROWTH",
+    "target_criteria": "Targeting companies size 20-1000 in SMB_GROWTH",
+    "created_at": "2025-12-10T00:00:00"
+  },
+  {
+    "audience_id": "AUD-2026-000003",
+    "name": "Audience Segment - Fintech #3",
+    "segment_type": "FINTECH",
+    "target_criteria": "Targeting companies size 30-1500 in FINTECH",
+    "created_at": "2025-12-10T00:00:00"
+  },
+  {
+    "audience_id": "AUD-2026-000004",
+    "name": "Audience Segment - Healthcare #4",
+    "segment_type": "HEALTHCARE",
+    "target_criteria": "Targeting companies size 40-2000 in HEALTHCARE",
+    "created_at": "2025-12-10T00:00:00"
+  },
+  {
+    "audience_id": "AUD-2026-000005",
+    "name": "Audience Segment - Retail Ecommerce #5",
+    "segment_type": "RETAIL_ECOMMERCE",
+    "target_criteria": "Targeting companies size 50-2500 in RETAIL_ECOMMERCE",
+    "created_at": "2025-12-10T00:00:00"
+  },
+  {
+    "audience_id": "AUD-2026-000006",
+    "name": "Audience Segment - Developer Tech #6",
+    "segment_type": "DEVELOPER_TECH",
+    "target_criteria": "Targeting companies size 60-3000 in DEVELOPER_TECH",
+    "created_at": "2025-12-10T00:00:00"
+  },
+  {
+    "audience_id": "AUD-2026-000007",
+    "name": "Audience Segment - B2B Enterprise #7",
+    "segment_type": "B2B_ENTERPRISE",
+    "target_criteria": "Targeting companies size 70-3500 in B2B_ENTERPRISE",
+    "created_at": "2025-12-10T00:00:00"
+  },
+  {
+    "audience_id": "AUD-2026-000008",
+    "name": "Audience Segment - Smb Growth #8",
+    "segment_type": "SMB_GROWTH",
+    "target_criteria": "Targeting companies size 80-4000 in SMB_GROWTH",
+    "created_at": "2025-12-10T00:00:00"
+  },
+  {
+    "audience_id": "AUD-2026-000009",
+    "name": "Audience Segment - Fintech #9",
+    "segment_type": "FINTECH",
+    "target_criteria": "Targeting companies size 90-4500 in FINTECH",
+    "created_at": "2025-12-10T00:00:00"
+  },
+  {
+    "audience_id": "AUD-2026-000010",
+    "name": "Audience Segment - Healthcare #10",
+    "segment_type": "HEALTHCARE",
+    "target_criteria": "Targeting companies size 100-5000 in HEALTHCARE",
+    "created_at": "2025-12-10T00:00:00"
+  },
+  {
+    "audience_id": "AUD-2026-000011",
+    "name": "Audience Segment - Retail Ecommerce #11",
+    "segment_type": "RETAIL_ECOMMERCE",
+    "target_criteria": "Targeting companies size 110-5500 in RETAIL_ECOMMERCE",
+    "created_at": "2025-12-10T00:00:00"
+  },
+  {
+    "audience_id": "AUD-2026-000012",
+    "name": "Audience Segment - Developer Tech #12",
+    "segment_type": "DEVELOPER_TECH",
+    "target_criteria": "Targeting companies size 120-6000 in DEVELOPER_TECH",
+    "created_at": "2025-12-10T00:00:00"
+  },
+  {
+    "audience_id": "AUD-2026-000013",
+    "name": "Audience Segment - B2B Enterprise #13",
+    "segment_type": "B2B_ENTERPRISE",
+    "target_criteria": "Targeting companies size 130-6500 in B2B_ENTERPRISE",
+    "created_at": "2025-12-10T00:00:00"
+  },
+  {
+    "audience_id": "AUD-2026-000014",
+    "name": "Audience Segment - Smb Growth #14",
+    "segment_type": "SMB_GROWTH",
+    "target_criteria": "Targeting companies size 140-7000 in SMB_GROWTH",
+    "created_at": "2025-12-10T00:00:00"
+  },
+  {
+    "audience_id": "AUD-2026-000015",
+    "name": "Audience Segment - Fintech #15",
+    "segment_type": "FINTECH",
+    "target_criteria": "Targeting companies size 150-7500 in FINTECH",
+    "created_at": "2025-12-10T00:00:00"
+  }
+]

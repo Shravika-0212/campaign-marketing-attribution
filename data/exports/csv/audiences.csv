@@ -1,0 +1,16 @@
+audience_id,name,segment_type,target_criteria,created_at
+AUD-2026-000001,Audience Segment - B2B Enterprise #1,B2B_ENTERPRISE,Targeting companies size 10-500 in B2B_ENTERPRISE,2025-12-10T00:00:00
+AUD-2026-000002,Audience Segment - Smb Growth #2,SMB_GROWTH,Targeting companies size 20-1000 in SMB_GROWTH,2025-12-10T00:00:00
+AUD-2026-000003,Audience Segment - Fintech #3,FINTECH,Targeting companies size 30-1500 in FINTECH,2025-12-10T00:00:00
+AUD-2026-000004,Audience Segment - Healthcare #4,HEALTHCARE,Targeting companies size 40-2000 in HEALTHCARE,2025-12-10T00:00:00
+AUD-2026-000005,Audience Segment - Retail Ecommerce #5,RETAIL_ECOMMERCE,Targeting companies size 50-2500 in RETAIL_ECOMMERCE,2025-12-10T00:00:00
+AUD-2026-000006,Audience Segment - Developer Tech #6,DEVELOPER_TECH,Targeting companies size 60-3000 in DEVELOPER_TECH,2025-12-10T00:00:00
+AUD-2026-000007,Audience Segment - B2B Enterprise #7,B2B_ENTERPRISE,Targeting companies size 70-3500 in B2B_ENTERPRISE,2025-12-10T00:00:00
+AUD-2026-000008,Audience Segment - Smb Growth #8,SMB_GROWTH,Targeting companies size 80-4000 in SMB_GROWTH,2025-12-10T00:00:00
+AUD-2026-000009,Audience Segment - Fintech #9,FINTECH,Targeting companies size 90-4500 in FINTECH,2025-12-10T00:00:00
+AUD-2026-000010,Audience Segment - Healthcare #10,HEALTHCARE,Targeting companies size 100-5000 in HEALTHCARE,2025-12-10T00:00:00
+AUD-2026-000011,Audience Segment - Retail Ecommerce #11,RETAIL_ECOMMERCE,Targeting companies size 110-5500 in RETAIL_ECOMMERCE,2025-12-10T00:00:00
+AUD-2026-000012,Audience Segment - Developer Tech #12,DEVELOPER_TECH,Targeting companies size 120-6000 in DEVELOPER_TECH,2025-12-10T00:00:00
+AUD-2026-000013,Audience Segment - B2B Enterprise #13,B2B_ENTERPRISE,Targeting companies size 130-6500 in B2B_ENTERPRISE,2025-12-10T00:00:00
+AUD-2026-000014,Audience Segment - Smb Growth #14,SMB_GROWTH,Targeting companies size 140-7000 in SMB_GROWTH,2025-12-10T00:00:00
+AUD-2026-000015,Audience Segment - Fintech #15,FINTECH,Targeting companies size 150-7500 in FINTECH,2025-12-10T00:00:00

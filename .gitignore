@@ -1,0 +1,10 @@
+# YottaFlex Marketing Attribution and ROI Analytics Platform
+.env
+__pycache__/
+*.pyc
+*.sqlite3
+*.db
+node_modules/
+dist/
+.coverage
+.pytest_cache/

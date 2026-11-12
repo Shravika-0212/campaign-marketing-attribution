@@ -1,0 +1,32 @@
+[
+  {
+    "model_id": "MDL-FIRST-TOUCH",
+    "model_code": "FIRST_TOUCH",
+    "name": "First-Touch Attribution",
+    "description": "Attributes 100% credit to the first eligible marketing touchpoint within lookback window.",
+    "lookback_window_days": 90,
+    "version": "1.0.0",
+    "is_active": true,
+    "created_at": "2026-11-12T04:58:17.591562"
+  },
+  {
+    "model_id": "MDL-LAST-TOUCH",
+    "model_code": "LAST_TOUCH",
+    "name": "Last-Touch Attribution",
+    "description": "Attributes 100% credit to the last eligible marketing touchpoint before conversion.",
+    "lookback_window_days": 90,
+    "version": "1.0.0",
+    "is_active": true,
+    "created_at": "2026-11-12T04:58:17.591562"
+  },
+  {
+    "model_id": "MDL-MULTI-TOUCH",
+    "model_code": "MULTI_TOUCH_LINEAR",
+    "name": "Multi-Touch Attribution (Linear / Equal-Weight)",
+    "description": "Attributes equal credit (1/N) across all N eligible marketing touchpoints.",
+    "lookback_window_days": 90,
+    "version": "1.0.0",
+    "is_active": true,
+    "created_at": "2026-11-12T04:58:17.591562"
+  }
+]
