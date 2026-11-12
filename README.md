@@ -3,6 +3,9 @@
 **Author / Candidate:** Full-Stack & Data Analytics Engineer (Python Focus)  
 **Deterministic Seed:** `20261022` | **Base Currency:** `USD` | **Lookback Window:** `90 Days`
 
+> 💡 **New to this project or preparing for an interview?**  
+> Read the beginner-friendly walkthrough in plain English: [**`README_FRESHER_EXPLAINED.md`**](file:///README_FRESHER_EXPLAINED.md) — It explains the business problem, real-life analogies, and interview Q&A with zero complex jargon.
+
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-1.0.0-009688.svg)](https://fastapi.tiangolo.com/)
 [![React 18](https://img.shields.io/badge/React-18-61DAFB.svg)](https://react.dev/)
