@@ -1,4 +1,4 @@
 model_id,model_code,name,description,lookback_window_days,version,is_active,created_at
-MDL-FIRST-TOUCH,FIRST_TOUCH,First-Touch Attribution,Attributes 100% credit to the first eligible marketing touchpoint within lookback window.,90,1.0.0,True,2026-11-12T04:58:17.591562
-MDL-LAST-TOUCH,LAST_TOUCH,Last-Touch Attribution,Attributes 100% credit to the last eligible marketing touchpoint before conversion.,90,1.0.0,True,2026-11-12T04:58:17.591562
-MDL-MULTI-TOUCH,MULTI_TOUCH_LINEAR,Multi-Touch Attribution (Linear / Equal-Weight),Attributes equal credit (1/N) across all N eligible marketing touchpoints.,90,1.0.0,True,2026-11-12T04:58:17.591562
+MDL-FIRST-TOUCH,FIRST_TOUCH,First-Touch Attribution,Attributes 100% credit to the first eligible marketing touchpoint within lookback window.,90,1.0.0,True,2026-11-13T07:02:42.324785
+MDL-LAST-TOUCH,LAST_TOUCH,Last-Touch Attribution,Attributes 100% credit to the last eligible marketing touchpoint before conversion.,90,1.0.0,True,2026-11-13T07:02:42.324785
+MDL-MULTI-TOUCH,MULTI_TOUCH_LINEAR,Multi-Touch Attribution (Linear / Equal-Weight),Attributes equal credit (1/N) across all N eligible marketing touchpoints.,90,1.0.0,True,2026-11-13T07:02:42.324785

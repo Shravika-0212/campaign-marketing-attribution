@@ -64,3 +64,13 @@ def test_no_touchpoints_after_conversion_in_results(setup_attribution):
         .all()
     )
     assert len(invalid_results) == 0
+
+def test_attribution_revenue_equals_order_revenue_across_models(setup_attribution):
+    db, _ = setup_attribution
+    valid_orders = db.query(Order).filter(Order.status == "COMPLETED", Order.is_duplicate_flag == False).all()
+    total_order_revenue = round(sum(o.amount for o in valid_orders), 2)
+
+    for model_id in ["MDL-FIRST-TOUCH", "MDL-LAST-TOUCH", "MDL-MULTI-TOUCH"]:
+        results = db.query(AttributionResult).filter(AttributionResult.model_id == model_id).all()
+        model_revenue = round(sum(r.attributed_revenue for r in results), 2)
+        assert abs(model_revenue - total_order_revenue) < 0.1, f"Model {model_id} revenue {model_revenue} != {total_order_revenue}"

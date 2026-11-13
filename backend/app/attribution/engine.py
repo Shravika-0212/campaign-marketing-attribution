@@ -42,10 +42,15 @@ class AttributionEngine:
 
     def calculate_model_attribution(self, model_id: str, model_code: str) -> int:
         """Calculate attribution for a specific model."""
-        # Fetch valid, completed, non-duplicate orders
+        # Fetch valid, completed, non-duplicate orders matching base currency
         orders = (
             self.db.query(Order)
-            .filter(Order.status == "COMPLETED", Order.is_duplicate_flag == False)
+            .filter(
+                Order.status == "COMPLETED",
+                Order.is_duplicate_flag == False,
+                Order.currency == BASE_CURRENCY
+            )
+            .order_by(Order.order_date.asc(), Order.order_id.asc())
             .all()
         )
 
@@ -60,6 +65,7 @@ class AttributionEngine:
             # 1. Matches contact_id
             # 2. occurred_at <= conversion timestamp (strictly no post-conversion touchpoints)
             # 3. occurred_at >= lookback cutoff (e.g. 90 days lookback)
+            # 4. Deterministic tie-breaking on occurred_at and touchpoint_id
             eligible_touches = (
                 self.db.query(Touchpoint)
                 .filter(
@@ -67,7 +73,7 @@ class AttributionEngine:
                     Touchpoint.occurred_at <= conv_time,
                     Touchpoint.occurred_at >= lookback_cutoff
                 )
-                .order_by(Touchpoint.occurred_at.asc())
+                .order_by(Touchpoint.occurred_at.asc(), Touchpoint.touchpoint_id.asc())
                 .all()
             )
 

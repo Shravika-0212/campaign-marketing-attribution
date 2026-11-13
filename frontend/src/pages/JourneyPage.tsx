@@ -3,15 +3,25 @@ import {
   Search,
   User,
   Clock,
-  ExternalLink,
   ShieldAlert,
-  Compass,
-  ArrowRight
+  ShieldCheck,
+  CheckCircle2,
+  Lock
 } from 'lucide-react';
 import { fetchContacts, fetchCustomerJourney } from '../services/api';
 import { ContactItem, CustomerJourney, JourneyEvent } from '../types';
 
-export const JourneyPage: React.FC = () => {
+interface JourneyPageProps {
+  customerOnly?: boolean;
+  isReadOnly?: boolean;
+  contactIdOverride?: string;
+}
+
+export const JourneyPage: React.FC<JourneyPageProps> = ({
+  customerOnly = false,
+  isReadOnly = false,
+  contactIdOverride
+}) => {
   const [contacts, setContacts] = useState<ContactItem[]>([]);
   const [selectedContactId, setSelectedContactId] = useState<string>('');
   const [journey, setJourney] = useState<CustomerJourney | null>(null);
@@ -19,19 +29,25 @@ export const JourneyPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Load initial contacts list
-    fetchContacts().then((data) => {
-      setContacts(data);
-      if (data.length > 0) {
-        setSelectedContactId(data[0].contact_id);
-        loadJourney(data[0].contact_id);
-      }
-    });
-  }, []);
+    if (customerOnly && contactIdOverride) {
+      setSelectedContactId(contactIdOverride);
+      loadJourney(contactIdOverride);
+    } else {
+      // Load initial contacts list
+      fetchContacts().then((data) => {
+        setContacts(data);
+        if (data.length > 0) {
+          const targetId = contactIdOverride || data[0].contact_id;
+          setSelectedContactId(targetId);
+          loadJourney(targetId);
+        }
+      });
+    }
+  }, [customerOnly, contactIdOverride]);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!search.trim()) return;
+    if (!search.trim() || customerOnly) return;
     const res = await fetchContacts(search);
     setContacts(res);
     if (res.length > 0) {
@@ -71,40 +87,74 @@ export const JourneyPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Top Search & Contact Selector */}
-      <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
-        <form onSubmit={handleSearch} className="relative w-full md:w-80">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search contact ID (e.g. CON-2026-000001) or email..."
-            className="w-full pl-9 pr-4 py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition"
-          />
-        </form>
-
-        {/* Quick Contact Chips */}
-        <div className="flex items-center space-x-2 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
-          <span className="text-[11px] text-slate-400 font-mono shrink-0">Sample Contacts:</span>
-          {contacts.slice(0, 5).map((ct) => (
-            <button
-              key={ct.contact_id}
-              onClick={() => {
-                setSelectedContactId(ct.contact_id);
-                loadJourney(ct.contact_id);
-              }}
-              className={`px-2.5 py-1 rounded text-[11px] font-mono transition shrink-0 ${
-                selectedContactId === ct.contact_id
-                  ? 'bg-emerald-500 text-slate-950 font-bold'
-                  : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-              }`}
-            >
-              {ct.contact_id}
-            </button>
-          ))}
+      {/* Role Notice Banners */}
+      {customerOnly && (
+        <div className="bg-gradient-to-r from-emerald-950/40 via-slate-900 to-slate-900 border border-emerald-500/20 rounded-xl p-4 flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <User className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-white">
+                Welcome, {journey?.contact_name || 'Shravika Kavati'}
+              </h3>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Here is your verified chronological journey, touchpoint interactions, and completed purchase receipts in Indian Rupees (₹).
+              </p>
+            </div>
+          </div>
+          <span className="text-xs font-mono px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center">
+            <CheckCircle2 className="w-3.5 h-3.5 mr-1" />
+            Verified Customer
+          </span>
         </div>
-      </div>
+      )}
+
+      {isReadOnly && (
+        <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 flex items-center space-x-3 text-xs text-amber-300">
+          <Lock className="w-4 h-4 text-amber-400 shrink-0" />
+          <div>
+            <span className="font-bold">Support Agent (Read-Only Mode):</span> You have read-only permissions to inspect customer profiles, sessions, and chronological events to resolve customer inquiries. Data mutation actions are locked.
+          </div>
+        </div>
+      )}
+
+      {/* Top Search & Contact Selector (Hidden in Customer View) */}
+      {!customerOnly && (
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+          <form onSubmit={handleSearch} className="relative w-full md:w-80">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search contact ID (e.g. CON-2026-000001) or email..."
+              className="w-full pl-9 pr-4 py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition"
+            />
+          </form>
+
+          {/* Quick Contact Chips */}
+          <div className="flex items-center space-x-2 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
+            <span className="text-[11px] text-slate-400 font-mono shrink-0">Sample Contacts:</span>
+            {contacts.slice(0, 5).map((ct) => (
+              <button
+                key={ct.contact_id}
+                onClick={() => {
+                  setSelectedContactId(ct.contact_id);
+                  loadJourney(ct.contact_id);
+                }}
+                className={`px-2.5 py-1 rounded text-[11px] font-mono transition shrink-0 ${
+                  selectedContactId === ct.contact_id
+                    ? 'bg-emerald-500 text-slate-950 font-bold'
+                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                }`}
+              >
+                {ct.name ? `${ct.name} (${ct.contact_id})` : ct.contact_id}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Main Content Layout */}
       {journey && (
@@ -201,7 +251,7 @@ export const JourneyPage: React.FC = () => {
                             <span className="text-indigo-400">Channel: {evt.channel}</span>
                           )}
                           {evt.amount !== undefined && evt.amount !== null && (
-                            <span className="text-amber-300 font-bold">Amount: ${evt.amount.toLocaleString()}</span>
+                            <span className="text-amber-300 font-bold">Amount: ₹{evt.amount.toLocaleString('en-IN')}</span>
                           )}
                         </div>
                       </div>

@@ -1,19 +1,24 @@
 """Deterministic Synthetic Data Generator for Marketing Attribution Platform.
 Strictly reproducible via fixed seed (20261022).
 Implements master data, realistic multi-touch customer journeys, dependent entities,
-and 5 mandatory labelled anomaly edge cases.
+derived attributes, and 5 mandatory labelled anomaly edge cases.
+
+Supports two configurations:
+- STARTER (50 campaigns, 1,000 contacts, 4,000 touchpoints, 200 opportunities)
+- FULL BASELINE (500 campaigns, 50,000 contacts, 200,000 touchpoints, 10,000 opportunities)
 """
 import random
 import hashlib
 import json
 from datetime import datetime, timedelta
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any, List, Tuple, Set
 from pathlib import Path
 
 from sqlalchemy.orm import Session
 
 from backend.app.generators.config import (
-    RANDOM_SEED, BASE_CURRENCY, DatasetConfig, STARTER_CONFIG, FULL_CONFIG,
+    RANDOM_SEED, BASE_CURRENCY, LOOKBACK_WINDOW_DAYS,
+    DatasetConfig, STARTER_CONFIG, FULL_BASELINE_CONFIG, FULL_CONFIG,
     PERIOD_START, TEST_END, get_period
 )
 from backend.app.generators.ground_truth import GroundTruthTracker
@@ -33,8 +38,25 @@ class SyntheticDataGenerator:
         self.gt_tracker = GroundTruthTracker()
         self.run_id = f"RUN-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{config.name}"
 
+    def _bulk_save_chunked(self, objects: list, chunk_size: int = 5000):
+        """Save objects in chunks to prevent memory bloat and SQLite statement limits."""
+        if not objects:
+            return
+        for i in range(0, len(objects), chunk_size):
+            chunk = objects[i:i + chunk_size]
+            self.db.bulk_save_objects(chunk)
+            self.db.commit()
+
     def generate(self) -> Dict[str, Any]:
-        """Execute full deterministic generation pipeline."""
+        """Execute full deterministic generation pipeline.
+        Sequence:
+        1. Attribution Models
+        2. Master parent entities (Channels, Audiences, Creatives, Campaigns, Bridge Tables, Contacts)
+        3. Phase 1: Valid Baseline Generation (Identities, Costs, Journeys, Conversions)
+        4. Phase 2: Explicit Labelled Anomaly Injection
+        5. Separate Ground Truth Export (JSON & CSV)
+        6. Summary Checksums & Run Record
+        """
         print(f"Starting deterministic data generation [{self.config.name}] with seed {self.seed}...")
         start_time = datetime.utcnow()
 
@@ -52,23 +74,23 @@ class SyntheticDataGenerator:
         # Step 1: Default Attribution Models
         self._create_attribution_models()
 
-        # Step 2: Master Data
+        # Step 2: Master Parent Data (Generated before dependent records)
         channels = self._generate_channels()
         audiences = self._generate_audiences()
         creatives = self._generate_creatives()
         campaigns = self._generate_campaigns(channels, audiences, creatives)
         contacts = self._generate_contacts()
 
-        # Step 3: Dependent Journeys & Conversion Records
+        # Step 3: Dependent Records (Phase 1: Valid Baseline -> Phase 2: Anomaly Injection)
         sessions, touchpoints, leads, opportunities, orders, costs = self._generate_customer_journeys(
             contacts, campaigns, channels, creatives
         )
 
-        # Step 4: Export Ground Truth
+        # Step 4: Export Ground Truth (Separated from feature tables)
         export_dir = Path(__file__).resolve().parent.parent.parent.parent / "data" / "ground_truth"
         gt_metadata = self.gt_tracker.export(export_dir)
 
-        # Step 5: Calculate Summary Counts & Checksums
+        # Step 5: Calculate Summary Counts & SHA-256 Checksums
         row_counts = {
             "channels": len(channels),
             "audiences": len(audiences),
@@ -84,7 +106,7 @@ class SyntheticDataGenerator:
             "ground_truth_anomalies": gt_metadata["total_anomalies_recorded"]
         }
 
-        # Compute deterministic checksum across generated counts & configuration
+        # Deterministic checksum across row counts and configuration parameters
         checksum_payload = f"{self.config.name}_{self.seed}_{json.dumps(row_counts, sort_keys=True)}"
         data_checksum = hashlib.sha256(checksum_payload.encode("utf-8")).hexdigest()
 
@@ -98,7 +120,8 @@ class SyntheticDataGenerator:
         }, indent=2)
         self.db.commit()
 
-        print(f"Data generation [{self.config.name}] completed successfully in {(datetime.utcnow() - start_time).total_seconds():.2f}s.")
+        duration = (datetime.utcnow() - start_time).total_seconds()
+        print(f"Data generation [{self.config.name}] completed successfully in {duration:.2f}s.")
         return {
             "run_id": self.run_id,
             "status": "COMPLETED",
@@ -106,7 +129,8 @@ class SyntheticDataGenerator:
             "config": self.config.name,
             "row_counts": row_counts,
             "checksum": data_checksum,
-            "ground_truth": gt_metadata
+            "ground_truth": gt_metadata,
+            "duration_seconds": round(duration, 2)
         }
 
     def _create_attribution_models(self):
@@ -117,7 +141,7 @@ class SyntheticDataGenerator:
                 model_code="FIRST_TOUCH",
                 name="First-Touch Attribution",
                 description="Attributes 100% credit to the first eligible marketing touchpoint within lookback window.",
-                lookback_window_days=90,
+                lookback_window_days=LOOKBACK_WINDOW_DAYS,
                 version="1.0.0",
                 is_active=True
             ),
@@ -126,7 +150,7 @@ class SyntheticDataGenerator:
                 model_code="LAST_TOUCH",
                 name="Last-Touch Attribution",
                 description="Attributes 100% credit to the last eligible marketing touchpoint before conversion.",
-                lookback_window_days=90,
+                lookback_window_days=LOOKBACK_WINDOW_DAYS,
                 version="1.0.0",
                 is_active=True
             ),
@@ -135,7 +159,7 @@ class SyntheticDataGenerator:
                 model_code="MULTI_TOUCH_LINEAR",
                 name="Multi-Touch Attribution (Linear / Equal-Weight)",
                 description="Attributes equal credit (1/N) across all N eligible marketing touchpoints.",
-                lookback_window_days=90,
+                lookback_window_days=LOOKBACK_WINDOW_DAYS,
                 version="1.0.0",
                 is_active=True
             )
@@ -147,7 +171,7 @@ class SyntheticDataGenerator:
         self.db.commit()
 
     def _generate_channels(self) -> List[Channel]:
-        """Generate static marketing channels."""
+        """Generate static marketing channels (6 Online, 2 Offline)."""
         channel_defs = [
             ("CHN-PAID-SEARCH", "Paid Search (Google/Bing Ads)", "ONLINE", "CPC"),
             ("CHN-ORGANIC", "Organic Search (SEO)", "ONLINE", "FLAT"),
@@ -205,7 +229,7 @@ class SyntheticDataGenerator:
                 creative_id=c_id,
                 name=f"Creative {fmt.title()} - {theme} (V{i})",
                 creative_format=fmt,
-                asset_url=f"https://assets.yottaflex.ai/creatives/{c_id}.png",
+                asset_url=f"https://cdn.marketingplatform.io/creatives/{c_id}.png",
                 message_theme=theme,
                 created_at=datetime(2025, 12, 15)
             )
@@ -252,7 +276,7 @@ class SyntheticDataGenerator:
             )
             campaigns.append(cmp)
 
-            # Bridge table links
+            # Primary Channel Bridge Record
             campaign_channels.append(CampaignChannel(
                 campaign_id=cmp_id,
                 channel_id=primary_channel.channel_id,
@@ -282,41 +306,47 @@ class SyntheticDataGenerator:
                 creative_id=crt.creative_id
             ))
 
-        self.db.bulk_save_objects(campaigns)
-        self.db.bulk_save_objects(campaign_channels)
-        self.db.bulk_save_objects(campaign_audiences)
-        self.db.bulk_save_objects(campaign_creatives)
-        self.db.commit()
+        self._bulk_save_chunked(campaigns)
+        self._bulk_save_chunked(campaign_channels)
+        self._bulk_save_chunked(campaign_audiences)
+        self._bulk_save_chunked(campaign_creatives)
         return campaigns
 
     def _generate_contacts(self) -> List[Contact]:
         """Generate deterministic contact records."""
         contacts = []
         first_names = [
-            "James", "Mary", "Robert", "Patricia", "John", "Jennifer", "Michael", "Linda",
-            "William", "Elizabeth", "David", "Barbara", "Richard", "Susan", "Joseph", "Jessica",
-            "Thomas", "Sarah", "Charles", "Karen", "Christopher", "Nancy", "Daniel", "Lisa",
-            "Matthew", "Betty", "Anthony", "Margaret", "Mark", "Sandra", "Donald", "Ashley",
-            "Steven", "Kimberly", "Paul", "Emily", "Andrew", "Donna", "Joshua", "Michelle"
+            "Sharanya", "Srinivas", "Shailaja", "Krish", "Shravika", "Aarav", "Ananya", "Rohan",
+            "Pooja", "Aditya", "Sneha", "Rahul", "Priya", "Vikram", "Neha", "Arjun",
+            "Kavya", "Suresh", "Divya", "Kiran", "Manish", "Deepika", "Rajesh", "Swati",
+            "Naveen", "Meera", "Gautam", "Sunita", "Harish", "Anita", "Vikas", "Sangeeta",
+            "Pranav", "Bhavna", "Kunal", "Tanvi", "Alok", "Pallavi", "Sachin", "Ritu"
         ]
         last_names = [
-            "Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis",
-            "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson",
-            "Thomas", "Taylor", "Moore", "Jackson", "Martin", "Lee", "Perez", "Thompson",
-            "White", "Harris", "Sanchez", "Clark", "Ramirez", "Lewis", "Robinson", "Walker"
+            "Kavati", "Sharma", "Verma", "Patel", "Reddy", "Rao", "Nair", "Iyer",
+            "Mehta", "Singh", "Kumar", "Gupta", "Deshmukh", "Joshi", "Bose", "Choudhury",
+            "Pillai", "Bhat", "Chatterjee", "Mishra", "Agarwal", "Saxena", "Pandey", "Ghosh",
+            "Kulkarni", "Chauhan", "Bhattacharya", "Menon", "Trivedi", "Banerjee", "Sengupta", "Das"
         ]
 
         total_days = (TEST_END - PERIOD_START).days
 
         for i in range(1, self.config.num_contacts + 1):
             cid = f"CON-2026-{i:06d}"
-            fn = first_names[i % len(first_names)]
-            ln = last_names[(i // len(first_names)) % len(last_names)]
-            email = f"user.{i:06d}.{fn.lower()}.{ln.lower()}@corpmail{i % 20}.com"
-            phone = f"+1-555-{100 + (i % 900):03d}-{i % 10000:04d}"
+            if i == 1:
+                # Featured Customer Journey: Shravika Kavati
+                fn = "Shravika"
+                ln = "Kavati"
+                email = "shravika.kavati@gmail.com"
+                phone = "+91-98765-43210"
+            else:
+                fn = first_names[i % len(first_names)]
+                ln = last_names[(i // len(first_names)) % len(last_names)]
+                email = f"user.{i:06d}.{fn.lower()}.{ln.lower()}@corpmail{i % 20}.com"
+                phone = f"+91-98765-{10000 + (i % 89999):05d}"
 
             # First seen timestamp
-            offset = self.rng.randint(0, total_days)
+            offset = self.rng.randint(0, max(0, total_days - 60))
             first_seen = PERIOD_START + timedelta(days=offset, hours=self.rng.randint(8, 20))
 
             contact = Contact(
@@ -331,9 +361,7 @@ class SyntheticDataGenerator:
             )
             contacts.append(contact)
 
-        # Bulk save
-        self.db.bulk_save_objects(contacts)
-        self.db.commit()
+        self._bulk_save_chunked(contacts)
         return contacts
 
     def _generate_customer_journeys(
@@ -343,15 +371,10 @@ class SyntheticDataGenerator:
         channels: List[Channel],
         creatives: List[Creative]
     ) -> Tuple[List[WebSession], List[Touchpoint], List[Lead], List[Opportunity], List[Order], List[CostRecord]]:
-        """Generate realistic journey events, conversions, costs, and inject anomalies."""
-        sessions: List[WebSession] = []
-        touchpoints: List[Touchpoint] = []
-        leads: List[Lead] = []
-        opportunities: List[Opportunity] = []
-        orders: List[Order] = []
-        costs: List[CostRecord] = []
-        identities: List[ContactIdentity] = []
-
+        """Two-phase generation:
+        Phase 1: Pure valid baseline records (Identities, Costs, Journeys, Conversions).
+        Phase 2: Explicit labelled anomaly injection (5 scenarios logged to GroundTruthTracker).
+        """
         channel_map = {c.channel_id: c for c in channels}
         touch_types = {
             "CHN-PAID-SEARCH": ("CLICK", "ONLINE", 1.85),
@@ -364,31 +387,14 @@ class SyntheticDataGenerator:
             "CHN-DIRECT": ("IN_PERSON", "OFFLINE", 75.0),
         }
 
-        # Step A: Generate Campaign Costs
-        # Determine campaigns with omitted costs (Anomaly 4)
-        missing_cost_camp_ids = set()
-        if self.config.missing_cost_campaigns_count > 0:
-            for c in campaigns[:self.config.missing_cost_campaigns_count]:
-                missing_cost_camp_ids.add(c.campaign_id)
-                self.gt_tracker.record(
-                    case_id=f"GT-ANO4-{c.campaign_id}",
-                    entity_type="CAMPAIGN",
-                    entity_id=c.campaign_id,
-                    anomaly_type="MISSING_CAMPAIGN_COST",
-                    expected_decision="FLAG_MISSING_COST_MARK_ROI_UNAVAILABLE",
-                    severity="HIGH",
-                    description=f"Campaign {c.campaign_id} has marketing activity but zero recorded costs.",
-                    related_ids=c.campaign_id
-                )
+        # =====================================================================
+        # PHASE 1: GENERATE CLEAN VALID BASELINE RECORDS
+        # =====================================================================
 
+        # 1. Baseline Cost Records (All in base currency INR, distributed across campaign duration)
+        costs: List[CostRecord] = []
         cost_id_counter = 1
-        currency_mismatch_counter = 0
-
         for cmp in campaigns:
-            if cmp.campaign_id in missing_cost_camp_ids:
-                continue # Deliberately omit costs
-
-            # Generate 3 to 12 cost records across campaign timeline
             num_costs = self.rng.randint(3, 8)
             time_span = max(1, (cmp.end_date - cmp.start_date).days)
             step_days = max(1, time_span // num_costs)
@@ -396,143 +402,144 @@ class SyntheticDataGenerator:
 
             for ci in range(num_costs):
                 cost_date = cmp.start_date + timedelta(days=ci * step_days)
-                cost_curr = BASE_CURRENCY
-
-                # Anomaly 3: Spend Currency Mismatch
-                if (currency_mismatch_counter < self.config.currency_mismatch_count and 
-                    ci == 0 and self.rng.random() < 0.2):
-                    cost_curr = "EUR" if currency_mismatch_counter % 2 == 0 else "GBP"
-                    cid_str = f"CST-2026-{cost_id_counter:06d}"
-                    currency_mismatch_counter += 1
-                    self.gt_tracker.record(
-                        case_id=f"GT-ANO3-{cid_str}",
-                        entity_type="COST_RECORD",
-                        entity_id=cid_str,
-                        anomaly_type="CURRENCY_MISMATCH",
-                        expected_decision="FLAG_CURRENCY_MISMATCH_EXCLUDE_FROM_ROI",
-                        severity="MEDIUM",
-                        description=f"Cost record {cid_str} has currency '{cost_curr}' which differs from base currency '{BASE_CURRENCY}'.",
-                        related_ids=cmp.campaign_id
-                    )
-
                 cst = CostRecord(
                     cost_id=f"CST-2026-{cost_id_counter:06d}",
                     campaign_id=cmp.campaign_id,
                     channel_id=cmp.channel_id,
                     recorded_date=cost_date,
                     amount=spend_per_record,
-                    currency=cost_curr,
+                    currency=BASE_CURRENCY,
                     cost_type="MEDIA_SPEND" if ci % 2 == 0 else "AGENCY_FEE",
                     created_at=cost_date
                 )
                 costs.append(cst)
                 cost_id_counter += 1
 
-        # Step B: Generate Customer Journeys
-        # Target: distribute touchpoints across contacts
-        avg_touches_per_contact = max(1, self.config.num_touchpoints // self.config.num_contacts)
-        touch_id_counters: Dict[str, int] = {}
+        # 2. Baseline Contact Identities
+        identities: List[ContactIdentity] = []
+        identity_counter = 1
+        contact_cookies: Dict[str, str] = {}
+
+        for contact in contacts:
+            cookie_id = f"CK-{contact.contact_id[-6:]}-{self.rng.randint(1000, 9999)}"
+            contact_cookies[contact.contact_id] = cookie_id
+            email_hash = hashlib.sha256(contact.email.encode("utf-8")).hexdigest()[:24]
+
+            # Cookie Identity Evidence
+            identities.append(ContactIdentity(
+                identity_id=f"IDN-2026-{identity_counter:06d}",
+                contact_id=contact.contact_id,
+                identity_type="COOKIE",
+                identity_value=cookie_id,
+                evidence_source="FORM_SUBMISSION",
+                first_observed_at=contact.first_seen_at,
+                created_at=contact.first_seen_at
+            ))
+            identity_counter += 1
+
+            # Email Hash Identity Evidence
+            identities.append(ContactIdentity(
+                identity_id=f"IDN-2026-{identity_counter:06d}",
+                contact_id=contact.contact_id,
+                identity_type="EMAIL_HASH",
+                identity_value=email_hash,
+                evidence_source="ACCOUNT_SIGNUP",
+                first_observed_at=contact.first_seen_at,
+                created_at=contact.first_seen_at
+            ))
+            identity_counter += 1
+
+        # 3. Baseline Customer Journeys & Conversions
+        sessions: List[WebSession] = []
+        touchpoints: List[Touchpoint] = []
+        leads: List[Lead] = []
+        opportunities: List[Opportunity] = []
+        orders: List[Order] = []
+
         session_counter = 1
         lead_counter = 1
         opp_counter = 1
         order_counter = 1
-        identity_counter = 1
+        touch_seq_counters: Dict[str, int] = {c.contact_id: 0 for c in contacts}
 
-        # Anomaly counters
-        post_conversion_anomalies_created = 0
-        duplicate_revenue_anomalies_created = 0
-        unsupported_identity_anomalies_created = 0
+        # Select exactly config.num_opportunities converting contacts (Contact #1 Shravika Kavati always converts!)
+        num_converted = min(self.config.num_opportunities, len(contacts))
+        other_indices = [i for i in range(1, len(contacts))]
+        sample_size = max(0, num_converted - 1)
+        converted_indices = set([0] + self.rng.sample(other_indices, min(sample_size, len(other_indices))))
 
-        # Select a subset of contacts who convert
-        num_converted_contacts = self.config.num_opportunities
-        converting_contact_indices = set(self.rng.sample(range(len(contacts)), min(num_converted_contacts, len(contacts))))
+        # Touchpoint target budget
+        target_touchpoints = self.config.num_touchpoints
+        converted_contacts_count = len(converted_indices)
+        non_converted_contacts_count = len(contacts) - converted_contacts_count
 
-        # Process each contact's journey
+        # Estimate average touches per group to hit total target touchpoints
+        # Converted contacts have longer multi-touch journeys (e.g. 5 to 8 touches)
+        # Non-converted contacts have 1 to 4 touches
         for idx, contact in enumerate(contacts):
-            is_converting = idx in converting_contact_indices
-            num_touches = self.rng.randint(1, avg_touches_per_contact * 2 + 1)
-            touch_id_counters[contact.contact_id] = 0
+            is_converting = idx in converted_indices
+            cookie_id = contact_cookies[contact.contact_id]
 
-            # 1. Identity generation (Cookie, Email hash, Device)
-            cookie_id = f"CK-{contact.contact_id[-6:]}-{self.rng.randint(1000, 9999)}"
-            email_hash = hashlib.sha256(contact.email.encode("utf-8")).hexdigest()[:24]
+            # Number of touches in this contact journey
+            if is_converting:
+                num_touches = self.rng.randint(4, 8)
+            else:
+                num_touches = self.rng.randint(1, 4)
 
-            # Store identity evidence unless we want to inject Anomaly 5
-            is_unsupported_identity_contact = False
-            if (unsupported_identity_anomalies_created < self.config.unsupported_identity_links_count and 
-                self.rng.random() < 0.15):
-                is_unsupported_identity_contact = True # Omit identity record for this contact!
+            # Multi-campaign customer journey: Select 1 to 3 distinct campaigns
+            num_camp_choices = min(len(campaigns), self.rng.randint(2, 3) if is_converting else self.rng.randint(1, 2))
+            journey_campaigns = self.rng.sample(campaigns, num_camp_choices)
 
-            if not is_unsupported_identity_contact:
-                identities.append(ContactIdentity(
-                    identity_id=f"IDN-2026-{identity_counter:06d}",
-                    contact_id=contact.contact_id,
-                    identity_type="COOKIE",
-                    identity_value=cookie_id,
-                    evidence_source="FORM_SUBMISSION",
-                    first_observed_at=contact.first_seen_at,
-                    created_at=contact.first_seen_at
-                ))
-                identity_counter += 1
-                identities.append(ContactIdentity(
-                    identity_id=f"IDN-2026-{identity_counter:06d}",
-                    contact_id=contact.contact_id,
-                    identity_type="EMAIL_HASH",
-                    identity_value=email_hash,
-                    evidence_source="ACCOUNT_SIGNUP",
-                    first_observed_at=contact.first_seen_at,
-                    created_at=contact.first_seen_at
-                ))
-                identity_counter += 1
-
-            # 2. Web Sessions & Touchpoints
+            # Journey progression timing (Long conversion windows modeled: up to 80 days)
             current_time = contact.first_seen_at
             contact_touches = []
 
             for t_idx in range(num_touches):
-                campaign = campaigns[self.rng.randint(0, len(campaigns) - 1)]
+                campaign = journey_campaigns[t_idx % len(journey_campaigns)]
                 channel = channel_map[campaign.channel_id]
                 creative = creatives[self.rng.randint(0, len(creatives) - 1)]
                 touch_def = touch_types.get(channel.channel_id, ("CLICK", "ONLINE", 1.0))
 
-                # Session
-                sess_id = f"SES-2026-{session_counter:06d}"
-                session_start = current_time
-                session_end = session_start + timedelta(minutes=self.rng.randint(2, 35))
-                
-                # Check for Anomaly 5: Anonymous Session Linked Without Evidence
-                if is_unsupported_identity_contact:
-                    unsupported_identity_anomalies_created += 1
-                    self.gt_tracker.record(
-                        case_id=f"GT-ANO5-{sess_id}",
-                        entity_type="WEB_SESSION",
-                        entity_id=sess_id,
-                        anomaly_type="UNSUPPORTED_IDENTITY_LINK",
-                        expected_decision="QUARANTINE_IDENTITY_LINK",
-                        severity="MEDIUM",
-                        description=f"Session {sess_id} linked to contact {contact.contact_id} without any supporting identity evidence in contact_identities.",
-                        related_ids=contact.contact_id
+                sess_ref_id = None
+                # Offline touchpoint handling: channels like Events & Direct Mail have NO web session
+                if touch_def[1] == "ONLINE":
+                    sess_id = f"SES-2026-{session_counter:06d}"
+                    sess_cookie = f"CK-{contact.contact_id[-6:]}-{session_counter:06d}"
+                    session_start = current_time
+                    session_duration_mins = self.rng.randint(2, 35)
+                    session_end = session_start + timedelta(minutes=session_duration_mins)
+
+                    sess = WebSession(
+                        session_id=sess_id,
+                        contact_id=contact.contact_id,
+                        anonymous_cookie_id=sess_cookie,
+                        started_at=session_start,
+                        ended_at=session_end,
+                        device_type="DESKTOP" if self.rng.random() < 0.6 else "MOBILE",
+                        landing_page=f"/campaigns/{campaign.campaign_id}",
+                        referrer=f"https://{channel.channel_id.lower().replace('chn-', '')}.com",
+                        is_authenticated=True,
+                        created_at=session_start
                     )
+                    sessions.append(sess)
+                    sess_ref_id = sess.session_id
 
-                sess = WebSession(
-                    session_id=sess_id,
-                    contact_id=contact.contact_id,
-                    anonymous_cookie_id=cookie_id,
-                    started_at=session_start,
-                    ended_at=session_end,
-                    device_type="DESKTOP" if self.rng.random() < 0.6 else "MOBILE",
-                    landing_page=f"/campaigns/{campaign.campaign_id}",
-                    referrer=f"https://{channel.channel_id.lower().replace('chn-', '')}.com",
-                    is_authenticated=True,
-                    created_at=session_start
-                )
-                sessions.append(sess)
-                session_counter += 1
+                    # Record supporting cookie identity in identities
+                    identities.append(ContactIdentity(
+                        identity_id=f"IDN-2026-{identity_counter:06d}",
+                        contact_id=contact.contact_id,
+                        identity_type="COOKIE",
+                        identity_value=sess_cookie,
+                        evidence_source="WEB_SESSION",
+                        first_observed_at=session_start,
+                        created_at=session_start
+                    ))
+                    identity_counter += 1
+                    session_counter += 1
 
-                # Touchpoint
-                touch_id_counters[contact.contact_id] += 1
-                t_count = touch_id_counters[contact.contact_id]
-                touch_id = f"TOUCH-{contact.contact_id}-{t_count:06d}"
+                touch_seq_counters[contact.contact_id] += 1
+                t_seq = touch_seq_counters[contact.contact_id]
+                touch_id = f"TOUCH-{contact.contact_id}-{t_seq:06d}"
 
                 tp = Touchpoint(
                     touchpoint_id=touch_id,
@@ -540,29 +547,29 @@ class SyntheticDataGenerator:
                     campaign_id=campaign.campaign_id,
                     channel_id=channel.channel_id,
                     creative_id=creative.creative_id,
-                    session_id=sess.session_id if touch_def[1] == "ONLINE" else None,
+                    session_id=sess_ref_id,
                     touch_type=touch_def[0],
                     channel_medium=touch_def[1],
-                    occurred_at=session_start,
+                    occurred_at=current_time,
                     interaction_cost=touch_def[2],
-                    created_at=session_start
+                    created_at=current_time
                 )
                 touchpoints.append(tp)
                 contact_touches.append(tp)
 
-                # Move forward in time (realistic journey gap: 1 to 14 days)
+                # Advance journey timestamp: realistic interval of 1 to 14 days
                 current_time += timedelta(days=self.rng.randint(1, 14), hours=self.rng.randint(1, 10))
                 if current_time > TEST_END:
                     break
 
-            # 3. Conversion events (Lead -> Opportunity -> Order)
+            # Conversion Pipeline (Lead -> Opportunity -> Order)
             if is_converting and contact_touches:
                 first_touch = contact_touches[0]
                 last_touch = contact_touches[-1]
-                
-                # Lead creation
+
+                # Derived Lead Record
                 lead_id = f"LEAD-2026-{lead_counter:06d}"
-                lead_created = first_touch.occurred_at + timedelta(hours=self.rng.randint(2, 48))
+                lead_created = first_touch.occurred_at + timedelta(hours=self.rng.randint(2, 24))
                 lead = Lead(
                     lead_id=lead_id,
                     contact_id=contact.contact_id,
@@ -574,12 +581,17 @@ class SyntheticDataGenerator:
                 leads.append(lead)
                 lead_counter += 1
 
-                # Opportunity creation
+                # Derived Opportunity Record
                 opp_id = f"OPP-2026-{opp_counter:06d}"
-                opp_stage = "CLOSED_WON" if self.rng.random() < 0.8 else "CLOSED_LOST"
+                # Contact 0 (Shravika Kavati) and majority close won
+                opp_stage = "CLOSED_WON" if (idx == 0 or self.rng.random() < 0.85) else "CLOSED_LOST"
                 opp_amount = round(self.rng.uniform(1500.0, 45000.0), 2)
-                conversion_time = max(lead_created, last_touch.occurred_at) + timedelta(days=self.rng.randint(2, 20))
                 
+                # Ensure conversion occurs shortly after last touchpoint, but strictly <= 85 days from first touch
+                conversion_time = last_touch.occurred_at + timedelta(days=self.rng.randint(1, 10), hours=self.rng.randint(1, 8))
+                if (conversion_time - first_touch.occurred_at).days > 85:
+                    conversion_time = first_touch.occurred_at + timedelta(days=85)
+
                 opp = Opportunity(
                     opportunity_id=opp_id,
                     contact_id=contact.contact_id,
@@ -594,11 +606,11 @@ class SyntheticDataGenerator:
                 opportunities.append(opp)
                 opp_counter += 1
 
-                # Order creation for CLOSED_WON
+                # Derived Order Record for CLOSED_WON opportunities
                 if opp_stage == "CLOSED_WON":
                     contact.lifecycle_stage = "CUSTOMER"
                     ord_id = f"ORD-2026-{order_counter:06d}"
-                    ord_num = f"YF-ORD-{order_counter:08d}"
+                    ord_num = f"ATT-ORD-{order_counter:08d}"
                     order = Order(
                         order_id=ord_id,
                         opportunity_id=opp.opportunity_id,
@@ -614,93 +626,166 @@ class SyntheticDataGenerator:
                     orders.append(order)
                     order_counter += 1
 
-                    # Check for Anomaly 1: Duplicate Revenue Counted More Than Once
-                    if (duplicate_revenue_anomalies_created < self.config.duplicate_revenue_count and 
-                        self.rng.random() < 0.25):
-                        dup_ord_id = f"ORD-2026-{order_counter:06d}"
-                        dup_order = Order(
-                            order_id=dup_ord_id,
-                            opportunity_id=opp.opportunity_id, # Duplicate reference to same opportunity!
-                            contact_id=contact.contact_id,
-                            order_number=ord_num, # Same order number!
-                            order_date=conversion_time + timedelta(hours=1),
-                            amount=opp_amount,
-                            currency=BASE_CURRENCY,
-                            status="COMPLETED",
-                            is_duplicate_flag=True, # Ground truth flagged
-                            created_at=conversion_time + timedelta(hours=1)
-                        )
-                        orders.append(dup_order)
-                        order_counter += 1
-                        duplicate_revenue_anomalies_created += 1
+        # =====================================================================
+        # PHASE 2: EXPLICIT LABELLED ANOMALY INJECTION
+        # =====================================================================
 
-                        self.gt_tracker.record(
-                            case_id=f"GT-ANO1-{dup_ord_id}",
-                            entity_type="ORDER",
-                            entity_id=dup_ord_id,
-                            anomaly_type="DUPLICATE_REVENUE",
-                            expected_decision="REJECT_DUPLICATE_REVENUE",
-                            severity="CRITICAL",
-                            description=f"Duplicate order {dup_ord_id} references existing order number {ord_num} and opportunity {opp.opportunity_id}.",
-                            related_ids=f"{ord_id},{opp.opportunity_id}"
-                        )
+        # Anomaly 1: Duplicate Revenue (Duplicate orders referencing same order number & opportunity)
+        eligible_orders_for_dup = [o for o in orders if o.contact_id != "CON-2026-000001"]
+        dup_targets = eligible_orders_for_dup[:self.config.duplicate_revenue_count]
+        for orig_order in dup_targets:
+            dup_ord_id = f"ORD-2026-{order_counter:06d}"
+            order_counter += 1
+            dup_order = Order(
+                order_id=dup_ord_id,
+                opportunity_id=orig_order.opportunity_id,
+                contact_id=orig_order.contact_id,
+                order_number=orig_order.order_number,
+                order_date=orig_order.order_date + timedelta(hours=1),
+                amount=orig_order.amount,
+                currency=BASE_CURRENCY,
+                status="COMPLETED",
+                is_duplicate_flag=True,
+                created_at=orig_order.order_date + timedelta(hours=1)
+            )
+            orders.append(dup_order)
 
-                    # Check for Anomaly 2: Touchpoint After Conversion
-                    if (post_conversion_anomalies_created < self.config.post_conversion_touches_count and 
-                        self.rng.random() < 0.35):
-                        post_conv_touch_id = f"TOUCH-{contact.contact_id}-{touch_id_counters[contact.contact_id]+1:06d}"
-                        touch_id_counters[contact.contact_id] += 1
-                        post_time = conversion_time + timedelta(days=self.rng.randint(2, 30))
-                        post_touch = Touchpoint(
-                            touchpoint_id=post_conv_touch_id,
-                            contact_id=contact.contact_id,
-                            campaign_id=campaigns[self.rng.randint(0, len(campaigns)-1)].campaign_id,
-                            channel_id=channels[self.rng.randint(0, len(channels)-1)].channel_id,
-                            creative_id=creatives[self.rng.randint(0, len(creatives)-1)].creative_id,
-                            session_id=None,
-                            touch_type="CLICK",
-                            channel_medium="ONLINE",
-                            occurred_at=post_time, # After conversion!
-                            interaction_cost=2.50,
-                            created_at=post_time
-                        )
-                        touchpoints.append(post_touch)
-                        post_conversion_anomalies_created += 1
+            self.gt_tracker.record(
+                case_id=f"GT-ANO1-{dup_ord_id}",
+                entity_type="ORDER",
+                entity_id=dup_ord_id,
+                anomaly_type="DUPLICATE_REVENUE",
+                expected_decision="REJECT_DUPLICATE_REVENUE",
+                severity="CRITICAL",
+                description=f"Duplicate order {dup_ord_id} references existing order number {orig_order.order_number} and opportunity {orig_order.opportunity_id}.",
+                related_ids=f"{orig_order.order_id},{orig_order.opportunity_id}"
+            )
 
-                        self.gt_tracker.record(
-                            case_id=f"GT-ANO2-{post_conv_touch_id}",
-                            entity_type="TOUCHPOINT",
-                            entity_id=post_conv_touch_id,
-                            anomaly_type="POST_CONVERSION_TOUCHPOINT",
-                            expected_decision="EXCLUDE_FROM_ATTRIBUTION",
-                            severity="HIGH",
-                            description=f"Touchpoint {post_conv_touch_id} occurred at {post_time.isoformat()} which is strictly after conversion at {conversion_time.isoformat()}.",
-                            related_ids=f"{order.order_id},{opp.opportunity_id}"
-                        )
+        # Anomaly 2: Post-Conversion Touchpoints (Touches strictly after conversion order date)
+        valid_orders = [o for o in orders if not o.is_duplicate_flag]
+        post_touch_targets = valid_orders[:self.config.post_conversion_touches_count]
+        for v_order in post_touch_targets:
+            touch_seq_counters[v_order.contact_id] += 1
+            t_seq = touch_seq_counters[v_order.contact_id]
+            post_conv_touch_id = f"TOUCH-{v_order.contact_id}-{t_seq:06d}"
+            post_time = v_order.order_date + timedelta(days=self.rng.randint(2, 30))
 
-        # Batch insert into database
+            post_touch = Touchpoint(
+                touchpoint_id=post_conv_touch_id,
+                contact_id=v_order.contact_id,
+                campaign_id=campaigns[self.rng.randint(0, len(campaigns) - 1)].campaign_id,
+                channel_id=channels[self.rng.randint(0, len(channels) - 1)].channel_id,
+                creative_id=creatives[self.rng.randint(0, len(creatives) - 1)].creative_id,
+                session_id=None,
+                touch_type="CLICK",
+                channel_medium="ONLINE",
+                occurred_at=post_time,
+                interaction_cost=2.50,
+                created_at=post_time
+            )
+            touchpoints.append(post_touch)
+
+            self.gt_tracker.record(
+                case_id=f"GT-ANO2-{post_conv_touch_id}",
+                entity_type="TOUCHPOINT",
+                entity_id=post_conv_touch_id,
+                anomaly_type="POST_CONVERSION_TOUCHPOINT",
+                expected_decision="EXCLUDE_FROM_ATTRIBUTION",
+                severity="HIGH",
+                description=f"Touchpoint {post_conv_touch_id} occurred at {post_time.isoformat()} which is strictly after conversion at {v_order.order_date.isoformat()}.",
+                related_ids=f"{v_order.order_id},{v_order.opportunity_id}"
+            )
+
+        # Anomaly 4: Missing Campaign Costs (Select specific campaigns and remove all their costs)
+        missing_cost_camp_ids: Set[str] = set()
+        if self.config.missing_cost_campaigns_count > 0:
+            for cmp in campaigns[:self.config.missing_cost_campaigns_count]:
+                missing_cost_camp_ids.add(cmp.campaign_id)
+                self.gt_tracker.record(
+                    case_id=f"GT-ANO4-{cmp.campaign_id}",
+                    entity_type="CAMPAIGN",
+                    entity_id=cmp.campaign_id,
+                    anomaly_type="MISSING_CAMPAIGN_COST",
+                    expected_decision="FLAG_MISSING_COST_MARK_ROI_UNAVAILABLE",
+                    severity="HIGH",
+                    description=f"Campaign {cmp.campaign_id} has marketing activity but zero recorded costs.",
+                    related_ids=cmp.campaign_id
+                )
+
+        # Filter out cost records belonging to missing cost campaigns
+        costs = [c for c in costs if c.campaign_id not in missing_cost_camp_ids]
+
+        # Anomaly 3: Spend Currency Mismatch (Incompatible currencies vs base INR)
+        # Select cost records from campaigns that retain their costs
+        eligible_costs = [c for c in costs if c.cost_type == "MEDIA_SPEND"]
+        mismatch_targets = eligible_costs[:self.config.currency_mismatch_count]
+        for m_idx, cst in enumerate(mismatch_targets):
+            cst.currency = "USD" if m_idx % 2 == 0 else "EUR"
+            self.gt_tracker.record(
+                case_id=f"GT-ANO3-{cst.cost_id}",
+                entity_type="COST_RECORD",
+                entity_id=cst.cost_id,
+                anomaly_type="CURRENCY_MISMATCH",
+                expected_decision="FLAG_CURRENCY_MISMATCH_EXCLUDE_FROM_ROI",
+                severity="MEDIUM",
+                description=f"Cost record {cst.cost_id} has currency '{cst.currency}' which differs from base currency '{BASE_CURRENCY}'.",
+                related_ids=cst.campaign_id
+            )
+
+        # Anomaly 5: Unsupported Identity Links (Anonymous session linked without evidence in contact_identities)
+        eligible_sessions = [s for s in sessions if s.contact_id != "CON-2026-000001"]
+        unsupported_sessions = eligible_sessions[:self.config.unsupported_identity_links_count]
+        unsupported_cookies_to_remove = set()
+
+        for s in unsupported_sessions:
+            unsupported_cookies_to_remove.add(s.anonymous_cookie_id)
+            self.gt_tracker.record(
+                case_id=f"GT-ANO5-{s.session_id}",
+                entity_type="WEB_SESSION",
+                entity_id=s.session_id,
+                anomaly_type="UNSUPPORTED_IDENTITY_LINK",
+                expected_decision="QUARANTINE_IDENTITY_LINK",
+                severity="MEDIUM",
+                description=f"Session {s.session_id} linked to contact {s.contact_id} without any supporting identity evidence in contact_identities.",
+                related_ids=s.contact_id
+            )
+
+        # Remove matching cookie identity evidence from identities list
+        identities = [
+            idn for idn in identities
+            if not (idn.identity_type == "COOKIE" and idn.identity_value in unsupported_cookies_to_remove)
+        ]
+
+        # =====================================================================
+        # CHUNKED BULK PERSISTENCE
+        # =====================================================================
         print(f"Persisting {len(costs)} cost records...")
-        self.db.bulk_save_objects(costs)
-        print(f"Persisting {len(identities)} contact identity records...")
-        self.db.bulk_save_objects(identities)
-        print(f"Persisting {len(sessions)} web sessions...")
-        self.db.bulk_save_objects(sessions)
-        print(f"Persisting {len(touchpoints)} touchpoints...")
-        self.db.bulk_save_objects(touchpoints)
-        print(f"Persisting {len(leads)} leads...")
-        self.db.bulk_save_objects(leads)
-        print(f"Persisting {len(opportunities)} opportunities...")
-        self.db.bulk_save_objects(opportunities)
-        print(f"Persisting {len(orders)} orders...")
-        self.db.bulk_save_objects(orders)
+        self._bulk_save_chunked(costs)
 
-        # Update converted contacts to CUSTOMER stage in database
+        print(f"Persisting {len(identities)} contact identity records...")
+        self._bulk_save_chunked(identities)
+
+        print(f"Persisting {len(sessions)} web sessions...")
+        self._bulk_save_chunked(sessions)
+
+        print(f"Persisting {len(touchpoints)} touchpoints...")
+        self._bulk_save_chunked(touchpoints)
+
+        print(f"Persisting {len(leads)} leads...")
+        self._bulk_save_chunked(leads)
+
+        print(f"Persisting {len(opportunities)} opportunities...")
+        self._bulk_save_chunked(opportunities)
+
+        print(f"Persisting {len(orders)} orders...")
+        self._bulk_save_chunked(orders)
+
+        # Update lifecycle_stage for converted contacts
         converted_contact_ids = {o.contact_id for o in orders if not o.is_duplicate_flag}
         if converted_contact_ids:
             self.db.query(Contact).filter(Contact.contact_id.in_(converted_contact_ids)).update(
                 {"lifecycle_stage": "CUSTOMER"}, synchronize_session=False
             )
-
-        self.db.commit()
+            self.db.commit()
 
         return sessions, touchpoints, leads, opportunities, orders, costs

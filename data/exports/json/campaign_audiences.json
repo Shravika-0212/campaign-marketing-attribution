@@ -1,0 +1,202 @@
+[
+  {
+    "campaign_id": "CMP-2026-000001",
+    "audience_id": "AUD-2026-000001"
+  },
+  {
+    "campaign_id": "CMP-2026-000002",
+    "audience_id": "AUD-2026-000001"
+  },
+  {
+    "campaign_id": "CMP-2026-000003",
+    "audience_id": "AUD-2026-000012"
+  },
+  {
+    "campaign_id": "CMP-2026-000004",
+    "audience_id": "AUD-2026-000001"
+  },
+  {
+    "campaign_id": "CMP-2026-000005",
+    "audience_id": "AUD-2026-000008"
+  },
+  {
+    "campaign_id": "CMP-2026-000006",
+    "audience_id": "AUD-2026-000015"
+  },
+  {
+    "campaign_id": "CMP-2026-000007",
+    "audience_id": "AUD-2026-000002"
+  },
+  {
+    "campaign_id": "CMP-2026-000008",
+    "audience_id": "AUD-2026-000002"
+  },
+  {
+    "campaign_id": "CMP-2026-000009",
+    "audience_id": "AUD-2026-000015"
+  },
+  {
+    "campaign_id": "CMP-2026-000010",
+    "audience_id": "AUD-2026-000002"
+  },
+  {
+    "campaign_id": "CMP-2026-000011",
+    "audience_id": "AUD-2026-000007"
+  },
+  {
+    "campaign_id": "CMP-2026-000012",
+    "audience_id": "AUD-2026-000012"
+  },
+  {
+    "campaign_id": "CMP-2026-000013",
+    "audience_id": "AUD-2026-000001"
+  },
+  {
+    "campaign_id": "CMP-2026-000014",
+    "audience_id": "AUD-2026-000013"
+  },
+  {
+    "campaign_id": "CMP-2026-000015",
+    "audience_id": "AUD-2026-000012"
+  },
+  {
+    "campaign_id": "CMP-2026-000016",
+    "audience_id": "AUD-2026-000001"
+  },
+  {
+    "campaign_id": "CMP-2026-000017",
+    "audience_id": "AUD-2026-000012"
+  },
+  {
+    "campaign_id": "CMP-2026-000018",
+    "audience_id": "AUD-2026-000001"
+  },
+  {
+    "campaign_id": "CMP-2026-000019",
+    "audience_id": "AUD-2026-000011"
+  },
+  {
+    "campaign_id": "CMP-2026-000020",
+    "audience_id": "AUD-2026-000005"
+  },
+  {
+    "campaign_id": "CMP-2026-000021",
+    "audience_id": "AUD-2026-000014"
+  },
+  {
+    "campaign_id": "CMP-2026-000022",
+    "audience_id": "AUD-2026-000003"
+  },
+  {
+    "campaign_id": "CMP-2026-000023",
+    "audience_id": "AUD-2026-000008"
+  },
+  {
+    "campaign_id": "CMP-2026-000024",
+    "audience_id": "AUD-2026-000012"
+  },
+  {
+    "campaign_id": "CMP-2026-000025",
+    "audience_id": "AUD-2026-000014"
+  },
+  {
+    "campaign_id": "CMP-2026-000026",
+    "audience_id": "AUD-2026-000003"
+  },
+  {
+    "campaign_id": "CMP-2026-000027",
+    "audience_id": "AUD-2026-000009"
+  },
+  {
+    "campaign_id": "CMP-2026-000028",
+    "audience_id": "AUD-2026-000013"
+  },
+  {
+    "campaign_id": "CMP-2026-000029",
+    "audience_id": "AUD-2026-000001"
+  },
+  {
+    "campaign_id": "CMP-2026-000030",
+    "audience_id": "AUD-2026-000002"
+  },
+  {
+    "campaign_id": "CMP-2026-000031",
+    "audience_id": "AUD-2026-000015"
+  },
+  {
+    "campaign_id": "CMP-2026-000032",
+    "audience_id": "AUD-2026-000004"
+  },
+  {
+    "campaign_id": "CMP-2026-000033",
+    "audience_id": "AUD-2026-000003"
+  },
+  {
+    "campaign_id": "CMP-2026-000034",
+    "audience_id": "AUD-2026-000013"
+  },
+  {
+    "campaign_id": "CMP-2026-000035",
+    "audience_id": "AUD-2026-000009"
+  },
+  {
+    "campaign_id": "CMP-2026-000036",
+    "audience_id": "AUD-2026-000012"
+  },
+  {
+    "campaign_id": "CMP-2026-000037",
+    "audience_id": "AUD-2026-000001"
+  },
+  {
+    "campaign_id": "CMP-2026-000038",
+    "audience_id": "AUD-2026-000007"
+  },
+  {
+    "campaign_id": "CMP-2026-000039",
+    "audience_id": "AUD-2026-000009"
+  },
+  {
+    "campaign_id": "CMP-2026-000040",
+    "audience_id": "AUD-2026-000014"
+  },
+  {
+    "campaign_id": "CMP-2026-000041",
+    "audience_id": "AUD-2026-000012"
+  },
+  {
+    "campaign_id": "CMP-2026-000042",
+    "audience_id": "AUD-2026-000003"
+  },
+  {
+    "campaign_id": "CMP-2026-000043",
+    "audience_id": "AUD-2026-000011"
+  },
+  {
+    "campaign_id": "CMP-2026-000044",
+    "audience_id": "AUD-2026-000004"
+  },
+  {
+    "campaign_id": "CMP-2026-000045",
+    "audience_id": "AUD-2026-000015"
+  },
+  {
+    "campaign_id": "CMP-2026-000046",
+    "audience_id": "AUD-2026-000008"
+  },
+  {
+    "campaign_id": "CMP-2026-000047",
+    "audience_id": "AUD-2026-000001"
+  },
+  {
+    "campaign_id": "CMP-2026-000048",
+    "audience_id": "AUD-2026-000008"
+  },
+  {
+    "campaign_id": "CMP-2026-000049",
+    "audience_id": "AUD-2026-000008"
+  },
+  {
+    "campaign_id": "CMP-2026-000050",
+    "audience_id": "AUD-2026-000013"
+  }
+]

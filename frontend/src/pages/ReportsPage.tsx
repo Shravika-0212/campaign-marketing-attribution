@@ -13,7 +13,9 @@ import { fetchExportsManifest } from '../services/api';
 
 export const ReportsPage: React.FC = () => {
   const [manifest, setManifest] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState<'manifest' | 'dictionary' | 'ground_truth'>('manifest');
+  const [activeTab, setActiveTab] = useState<'manifest' | 'dictionary' | 'ground_truth' | 'charts'>('manifest');
+  const [chartRefreshKey, setChartRefreshKey] = useState<number>(Date.now());
+  const [isGeneratingCharts, setIsGeneratingCharts] = useState<boolean>(false);
 
   useEffect(() => {
     fetchExportsManifest()
@@ -65,7 +67,8 @@ export const ReportsPage: React.FC = () => {
           {[
             { id: 'manifest', label: 'Export Files & SHA-256 Manifest' },
             { id: 'dictionary', label: '12-Entity Relational Data Dictionary' },
-            { id: 'ground_truth', label: 'Evaluation Ground Truth (Separate)' }
+            { id: 'ground_truth', label: 'Evaluation Ground Truth (Separate)' },
+            { id: 'charts', label: 'Python Matplotlib Charts' }
           ].map((t) => (
             <button
               key={t.id}
@@ -198,6 +201,156 @@ export const ReportsPage: React.FC = () => {
               <Download className="w-4 h-4 text-emerald-400" />
               <span>Download ground_truth.json</span>
             </a>
+          </div>
+        </div>
+      )}
+
+      {/* Tab 4: Python Matplotlib Charts */}
+      {activeTab === 'charts' && (
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+            <div>
+              <div className="flex items-center space-x-2">
+                <h4 className="text-sm font-semibold text-white">Python Matplotlib Data Visualizations</h4>
+                <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                  Pandas + NumPy + Matplotlib
+                </span>
+              </div>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Publication-quality analytics plots rendered server-side in Python. Demonstrating data science workflows, multi-channel ROI analysis, and journey progression.
+              </p>
+            </div>
+            <button
+              onClick={async () => {
+                setIsGeneratingCharts(true);
+                try {
+                  await fetch('/api/analytics/charts/generate');
+                  setChartRefreshKey(Date.now());
+                } catch (e) {
+                  console.error('Failed to regenerate charts', e);
+                } finally {
+                  setIsGeneratingCharts(false);
+                }
+              }}
+              disabled={isGeneratingCharts}
+              className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs transition disabled:opacity-50"
+            >
+              <span>{isGeneratingCharts ? 'Rendering Plots...' : 'Regenerate Matplotlib Charts'}</span>
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Chart 1 */}
+            <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h5 className="text-xs font-bold text-white">1. Attribution Models Comparison</h5>
+                  <p className="text-[11px] text-slate-400">First-Touch vs Last-Touch vs Multi-Touch Credited Revenue</p>
+                </div>
+                <a
+                  href={`/api/analytics/charts/view/attribution_model_comparison.png?t=${chartRefreshKey}`}
+                  download="attribution_model_comparison.png"
+                  className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center space-x-1"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Download PNG</span>
+                </a>
+              </div>
+              <div className="rounded-lg overflow-hidden border border-slate-800 bg-slate-900 flex items-center justify-center min-h-[200px]">
+                <img
+                  src={`/api/analytics/charts/view/attribution_model_comparison.png?t=${chartRefreshKey}`}
+                  alt="Attribution Models Comparison"
+                  className="w-full h-auto object-contain"
+                  onError={(e: any) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Chart 2 */}
+            <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h5 className="text-xs font-bold text-white">2. Monthly Revenue vs. Spend Progression (2026)</h5>
+                  <p className="text-[11px] text-slate-400">Chronological 12-month financial trajectory & ROI</p>
+                </div>
+                <a
+                  href={`/api/analytics/charts/view/monthly_revenue_vs_spend.png?t=${chartRefreshKey}`}
+                  download="monthly_revenue_vs_spend.png"
+                  className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center space-x-1"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Download PNG</span>
+                </a>
+              </div>
+              <div className="rounded-lg overflow-hidden border border-slate-800 bg-slate-900 flex items-center justify-center min-h-[200px]">
+                <img
+                  src={`/api/analytics/charts/view/monthly_revenue_vs_spend.png?t=${chartRefreshKey}`}
+                  alt="Monthly Revenue vs Spend"
+                  className="w-full h-auto object-contain"
+                  onError={(e: any) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Chart 3 */}
+            <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h5 className="text-xs font-bold text-white">3. Channel Acquisition Efficiency (Spend vs. Revenue)</h5>
+                  <p className="text-[11px] text-slate-400">Horizontal bar plot comparing spend and return by channel</p>
+                </div>
+                <a
+                  href={`/api/analytics/charts/view/channel_efficiency_roi.png?t=${chartRefreshKey}`}
+                  download="channel_efficiency_roi.png"
+                  className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center space-x-1"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Download PNG</span>
+                </a>
+              </div>
+              <div className="rounded-lg overflow-hidden border border-slate-800 bg-slate-900 flex items-center justify-center min-h-[200px]">
+                <img
+                  src={`/api/analytics/charts/view/channel_efficiency_roi.png?t=${chartRefreshKey}`}
+                  alt="Channel Efficiency ROI"
+                  className="w-full h-auto object-contain"
+                  onError={(e: any) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Chart 4 */}
+            <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h5 className="text-xs font-bold text-white">4. Customer Journey Timeline: Shravika Kavati</h5>
+                  <p className="text-[11px] text-slate-400">Chronological touchpoint progression from discovery to order</p>
+                </div>
+                <a
+                  href={`/api/analytics/charts/view/shravika_kavati_journey.png?t=${chartRefreshKey}`}
+                  download="shravika_kavati_journey.png"
+                  className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center space-x-1"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Download PNG</span>
+                </a>
+              </div>
+              <div className="rounded-lg overflow-hidden border border-slate-800 bg-slate-900 flex items-center justify-center min-h-[200px]">
+                <img
+                  src={`/api/analytics/charts/view/shravika_kavati_journey.png?t=${chartRefreshKey}`}
+                  alt="Shravika Kavati Customer Journey"
+                  className="w-full h-auto object-contain"
+                  onError={(e: any) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
+              </div>
+            </div>
           </div>
         </div>
       )}

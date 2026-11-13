@@ -14,11 +14,35 @@ from backend.app.api.endpoints import router as api_router
 async def lifespan(app: FastAPI):
     # Initialize database tables on startup
     init_db()
+    
+    # Auto-populate if empty or run anomaly detection if needed
+    from backend.app.models.database import SessionLocal
+    from backend.app.models.entities import Campaign, AnomalyIssue, AttributionResult, Order
+    db = SessionLocal()
+    try:
+        if db.query(Campaign).count() == 0:
+            from backend.app.generators.synthetic_data import SyntheticDataGenerator
+            from backend.app.generators.config import STARTER_CONFIG
+            from backend.app.attribution.engine import AttributionEngine
+            from backend.app.analytics.anomaly_detector import AnomalyDetectionEngine
+            SyntheticDataGenerator(db, STARTER_CONFIG).generate()
+            AttributionEngine(db).run_all_models()
+            AnomalyDetectionEngine(db).run_detection()
+        else:
+            if db.query(AnomalyIssue).count() == 0 and db.query(Order).count() > 0:
+                from backend.app.analytics.anomaly_detector import AnomalyDetectionEngine
+                AnomalyDetectionEngine(db).run_detection()
+            if db.query(AttributionResult).count() == 0 and db.query(Order).count() > 0:
+                from backend.app.attribution.engine import AttributionEngine
+                AttributionEngine(db).run_all_models()
+    finally:
+        db.close()
+        
     yield
 
 app = FastAPI(
     title="Marketing Attribution and ROI Analytics Platform",
-    description="End-to-End Analytics Platform for YottaFlex AI Recruitment Drive",
+    description="End-to-End Analytics Platform for Marketing Attribution & ROI Analysis",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc",

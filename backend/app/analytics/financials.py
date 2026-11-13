@@ -69,6 +69,12 @@ class FinancialEngine:
         headline_attributed_rev = model_revenues.get("MULTI_TOUCH_LINEAR", 0.0)
         unattributed_revenue = round(max(0.0, total_closed_revenue - headline_attributed_rev), 2)
 
+        # Detect and isolate currency mismatches (e.g. USD records incompatible with INR base ledger)
+        mismatched_costs = self.db.query(CostRecord).filter(CostRecord.currency != BASE_CURRENCY).all()
+        currency_mismatch_count = len(mismatched_costs)
+        excluded_foreign_spend = round(sum(c.amount for c in mismatched_costs), 2)
+        quarantined_currencies = sorted(list(set(c.currency for c in mismatched_costs)))
+
         overall_roi: Optional[float] = None
         if total_campaign_spend > 0:
             overall_roi = round(((headline_attributed_rev - total_campaign_spend) / total_campaign_spend) * 100, 2)
@@ -89,19 +95,27 @@ class FinancialEngine:
             "unattributed_revenue": unattributed_revenue,
             "excluded_duplicate_revenue": excluded_duplicate_revenue,
             "excluded_duplicate_orders_count": excluded_duplicate_orders_count,
+            "currency_mismatch_count": currency_mismatch_count,
+            "excluded_foreign_spend": excluded_foreign_spend,
+            "quarantined_currencies": quarantined_currencies,
+            "is_reconciled": (round(headline_attributed_rev, 2) == round(total_closed_revenue, 2)),
             "overall_roi": overall_roi,
             "cost_per_lead": cost_per_lead,
             "cost_per_acquisition": cost_per_acquisition,
             "revenue_by_model": model_revenues
         }
 
-    def get_campaign_roi_breakdown(self, model_id: str = "MDL-MULTI-TOUCH") -> List[Dict[str, Any]]:
-        """Calculate detailed ROI, Spend, Revenue, CPL, CPA per campaign."""
+    def get_campaign_roi_breakdown(
+        self,
+        model_id: str = "MDL-MULTI-TOUCH",
+        evaluation_period: Optional[str] = None
+    ) -> List[Dict[str, Any]]:
+        """Calculate detailed ROI, Spend, Revenue, CPL, CPA per campaign with optional evaluation period filtering."""
         campaigns = self.db.query(Campaign).all()
         breakdown = []
 
         for cmp in campaigns:
-            # Reconciled USD spend
+            # Reconciled spend
             actual_spend = (
                 self.db.query(func.sum(CostRecord.amount))
                 .filter(CostRecord.campaign_id == cmp.campaign_id, CostRecord.currency == BASE_CURRENCY)
@@ -117,34 +131,42 @@ class FinancialEngine:
             )
 
             # Attributed revenue for chosen model_id
-            attr_rev = (
+            attr_rev_query = (
                 self.db.query(func.sum(AttributionResult.attributed_revenue))
                 .filter(
                     AttributionResult.campaign_id == cmp.campaign_id,
                     AttributionResult.model_id == model_id
                 )
-                .scalar() or 0.0
             )
-            attr_rev = round(attr_rev, 2)
+            if evaluation_period and evaluation_period.upper() != "ALL":
+                attr_rev_query = attr_rev_query.filter(AttributionResult.evaluation_period == evaluation_period.upper())
+            attr_rev = round(attr_rev_query.scalar() or 0.0, 2)
 
             leads_count = self.db.query(Lead).filter(Lead.campaign_id == cmp.campaign_id).count()
             opps_count = self.db.query(Opportunity).filter(Opportunity.campaign_id == cmp.campaign_id).count()
-            conversions_count = (
+            
+            conv_count_query = (
                 self.db.query(func.count(func.distinct(AttributionResult.order_id)))
                 .filter(
                     AttributionResult.campaign_id == cmp.campaign_id,
                     AttributionResult.model_id == model_id
                 )
-                .scalar() or 0
             )
+            if evaluation_period and evaluation_period.upper() != "ALL":
+                conv_count_query = conv_count_query.filter(AttributionResult.evaluation_period == evaluation_period.upper())
+            conversions_count = conv_count_query.scalar() or 0
 
             # Safe ROI calculation
             roi: Optional[float] = None
             roi_status: str = "CALCULATED"
+            status_display: str = cmp.status
+            is_incomplete: bool = False
 
             if cost_record_count == 0 or actual_spend <= 0.0:
                 roi = None
                 roi_status = "UNAVAILABLE_MISSING_COST"
+                status_display = "INCOMPLETE"
+                is_incomplete = True
             else:
                 roi = round(((attr_rev - actual_spend) / actual_spend) * 100, 2)
 
@@ -156,6 +178,8 @@ class FinancialEngine:
                 "campaign_name": cmp.name,
                 "channel_id": cmp.channel_id,
                 "status": cmp.status,
+                "status_display": status_display,
+                "is_incomplete": is_incomplete,
                 "budget": cmp.budget,
                 "actual_spend": actual_spend,
                 "attributed_revenue": attr_rev,

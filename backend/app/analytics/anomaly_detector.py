@@ -60,7 +60,7 @@ class AnomalyDetectionEngine:
                     entity_id=dup.order_id,
                     issue_type="DUPLICATE_REVENUE",
                     severity="CRITICAL",
-                    description=f"Duplicate order {dup.order_id} references existing order_number {ord_num}. Revenue duplicate risk: ${dup.amount:.2f}",
+                    description=f"Duplicate order {dup.order_id} references existing order_number {ord_num}. Revenue duplicate risk: ₹{dup.amount:.2f}",
                     expected_decision="REJECT_DUPLICATE_REVENUE",
                     actual_decision="EXCLUDED_FROM_FINANCIAL_TOTALS",
                     resolution_status="QUARANTINED",

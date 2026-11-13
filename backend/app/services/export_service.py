@@ -14,7 +14,8 @@ from sqlalchemy.orm import Session
 from backend.app.models.entities import (
     Campaign, Channel, Creative, Audience, Contact, WebSession,
     Touchpoint, Lead, Opportunity, Order, CostRecord, AttributionResult,
-    AnomalyIssue, ValidationResult, AttributionModel
+    AnomalyIssue, ValidationResult, AttributionModel,
+    CampaignChannel, CampaignAudience, CampaignCreative, ContactIdentity
 )
 from backend.app.generators.config import RANDOM_SEED
 
@@ -30,6 +31,10 @@ CORE_EXPORT_TABLES = [
     ("opportunities", Opportunity),
     ("orders", Order),
     ("cost_records", CostRecord),
+    ("campaign_channels", CampaignChannel),
+    ("campaign_audiences", CampaignAudience),
+    ("campaign_creatives", CampaignCreative),
+    ("contact_identities", ContactIdentity),
     ("attribution_results", AttributionResult),
     ("anomaly_issues", AnomalyIssue),
     ("validation_results", ValidationResult),

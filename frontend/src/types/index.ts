@@ -11,6 +11,10 @@ export interface DashboardSummary {
   unattributed_revenue: number;
   excluded_duplicate_revenue: number;
   excluded_duplicate_orders_count: number;
+  currency_mismatch_count?: number;
+  excluded_foreign_spend?: number;
+  quarantined_currencies?: string[];
+  is_reconciled?: boolean;
   overall_roi: number | null;
   cost_per_lead: number;
   cost_per_acquisition: number;
@@ -29,6 +33,8 @@ export interface CampaignItem {
   campaign_name: string;
   channel_id: string;
   status: string;
+  status_display?: string;
+  is_incomplete?: boolean;
   budget: number;
   actual_spend: number;
   attributed_revenue: number;
@@ -96,6 +102,15 @@ export interface AttributionCompareItem {
   first_touch_roi: number | null;
   last_touch_roi: number | null;
   multi_touch_roi: number | null;
+}
+
+export interface AttributionCompareResponse {
+  campaigns: AttributionCompareItem[];
+  total_eligible_revenue: number;
+  total_first_touch_revenue: number;
+  total_last_touch_revenue: number;
+  total_multi_touch_revenue: number;
+  is_fully_reconciled: boolean;
 }
 
 export interface AnomalyIssueItem {
@@ -171,4 +186,47 @@ export interface GeneratorStatus {
   status: string;
   row_counts: Record<string, number>;
   completed_at: string | null;
+}
+
+export interface ChronologicalPeriodItem {
+  period_code: string;
+  name: string;
+  start_date: string;
+  end_date: string;
+  duration_days: number;
+  purpose: string;
+  orders_count: number;
+  order_revenue: number;
+  attributed_revenue_multi_touch: number;
+  touchpoints_count: number;
+  campaign_spend: number;
+  anomalies_detected: number;
+}
+
+export interface ChronologicalPeriodsResponse {
+  status: string;
+  total_periods: number;
+  boundaries_summary: string;
+  periods: ChronologicalPeriodItem[];
+}
+
+export type UserRole =
+  | 'CUSTOMER_PROSPECT'
+  | 'MARKETING_SALES_OPS'
+  | 'SUPPORT_AGENT'
+  | 'ANALYST'
+  | 'SYSTEM_ADMIN';
+
+export interface ActorProfile {
+  user_id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  role_name: string;
+  title: string;
+  contact_id: string | null;
+  avatar_badge: string;
+  description: string;
+  permissions: string[];
+  allowed_pages: string[];
 }

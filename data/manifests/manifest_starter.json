@@ -3,22 +3,22 @@
   "generation_config": "STARTER",
   "seed": 20261022,
   "schema_version": "1.0.0",
-  "exported_at": "2026-11-12T04:58:28.509867",
-  "total_files": 31,
+  "exported_at": "2026-11-13T07:02:47.134934",
+  "total_files": 39,
   "files": [
     {
       "dataset_name": "campaigns",
       "file_name": "csv/campaigns.csv",
       "format": "CSV",
       "record_count": 50,
-      "sha256": "6b9df49bf8bbf4cbf8bb28f7c056a4d967ad3b313f2abcbaaf0671e6a0d165f5"
+      "sha256": "cead1ce60870e6ac856fceb603b5f11574fb159a17fa487819ace79ecaa1fbe8"
     },
     {
       "dataset_name": "campaigns",
       "file_name": "json/campaigns.json",
       "format": "JSON",
       "record_count": 50,
-      "sha256": "ae98b155d711cb16d6ec3dc854fdcfda99101ed09bc4f1bac59660209378d456"
+      "sha256": "d0054cc227440e8246f978f3666a42ce64834fe5304da816866e23a3328902f5"
     },
     {
       "dataset_name": "channels",
@@ -39,14 +39,14 @@
       "file_name": "csv/creatives.csv",
       "format": "CSV",
       "record_count": 30,
-      "sha256": "92d4134be148cc0a90c100764d9d201e6cfd3da4f975fca6e84cfbca0a06d933"
+      "sha256": "961853319ba6ac179d8f9e76a9e5a4f57f6fa3f6f76ec0d38416ed924b7596b8"
     },
     {
       "dataset_name": "creatives",
       "file_name": "json/creatives.json",
       "format": "JSON",
       "record_count": 30,
-      "sha256": "6ec355632f076ea8efb314d58858a7227be891e6de67d91e6c67070b7a92f0b3"
+      "sha256": "915048c2f7ba4bc04ee4cd2975ab9468c56007ca700b71c6246e98682216d5db"
     },
     {
       "dataset_name": "audiences",
@@ -67,161 +67,217 @@
       "file_name": "csv/contacts.csv",
       "format": "CSV",
       "record_count": 1000,
-      "sha256": "b01a0c04b132c0ad73a2464735585dfd68fe810e579ca190027638275aa99241"
+      "sha256": "0f95f624a2927bda9d196af584aec85268eb9638c348b519799a8fd01bdba329"
     },
     {
       "dataset_name": "contacts",
       "file_name": "json/contacts.json",
       "format": "JSON",
       "record_count": 1000,
-      "sha256": "7ff97e44b95a856816990340466059729fb5daa7c20c83ae0dbf6de73c7e1a23"
+      "sha256": "09e17ef1e4a048983b407ffce1486e01e2f24f7d84b6bc3d3de2e9bac42a7fc7"
     },
     {
       "dataset_name": "web_sessions",
       "file_name": "csv/web_sessions.csv",
       "format": "CSV",
-      "record_count": 4753,
-      "sha256": "7505e159e1a1e3a8ac87106e8c097ef5fdd87ed1328864c49dd4e404e6d94b16"
+      "record_count": 2416,
+      "sha256": "40bd0b7dc9d362819ae81406b17b93c6aee31c387f858132712a7781f75e1459"
     },
     {
       "dataset_name": "web_sessions",
       "file_name": "json/web_sessions.json",
       "format": "JSON",
-      "record_count": 4753,
-      "sha256": "1771a480384b75a93f7025add937e67c7f3da652d26460e20af2c9c86b1fbd58"
+      "record_count": 2416,
+      "sha256": "d1bbfea940f6f401070a7cbb4f69a01d86fc0949c596f70470836cc907e4d0de"
     },
     {
       "dataset_name": "touchpoints",
       "file_name": "csv/touchpoints.csv",
       "format": "CSV",
-      "record_count": 4778,
-      "sha256": "53840739cb552053beedc620be6711f1c2df20ea68880defc9edd4b8cdc7041a"
+      "record_count": 3212,
+      "sha256": "5199298ed7770d47280e4c925d01a4e6442de3b12f8f828b0e23d8a0c29f59e9"
     },
     {
       "dataset_name": "touchpoints",
       "file_name": "json/touchpoints.json",
       "format": "JSON",
-      "record_count": 4778,
-      "sha256": "3a50b81e31e5e4b78ffb9f70b50aa4a9e30dc00b9210ac75a506cf9a4ce5cffe"
+      "record_count": 3212,
+      "sha256": "50b78ef199d04ed3c79c0e0ddea975fdf944904dbb4727f0ebf672834105bc15"
     },
     {
       "dataset_name": "leads",
       "file_name": "csv/leads.csv",
       "format": "CSV",
       "record_count": 200,
-      "sha256": "86b3582b2531d7320c4bc6c46dc84794edfc5c784f456312311fb9b1d4634a24"
+      "sha256": "7af374db293b605197b64740a5a106bcbade355f79f25db4c0c0bb28ee026c0f"
     },
     {
       "dataset_name": "leads",
       "file_name": "json/leads.json",
       "format": "JSON",
       "record_count": 200,
-      "sha256": "82b176f332967cae5c8bd2b51199e71230f4f27dd3299fc98622a54f4aff3fa6"
+      "sha256": "1156afd9a5682fd5ba5892eb953419e36a14d9b846df5cb5a0b63c81cd68ae28"
     },
     {
       "dataset_name": "opportunities",
       "file_name": "csv/opportunities.csv",
       "format": "CSV",
       "record_count": 200,
-      "sha256": "e2c2c1f9858162e70bf08a2332e46ae24d70c1e8660d8427785e8952361c6387"
+      "sha256": "794b468347fd0e09158752fbd863b5ad757180649f3d832bfad4c45e50997f25"
     },
     {
       "dataset_name": "opportunities",
       "file_name": "json/opportunities.json",
       "format": "JSON",
       "record_count": 200,
-      "sha256": "311145ca8539c582a71b34e0c01178e3ce748ceec75bdb3a263a0b768a5378ba"
+      "sha256": "5a69ebc4108006f78be59ffdfd1e6808e5a74195a1d342184cf38fcf5daa9851"
     },
     {
       "dataset_name": "orders",
       "file_name": "csv/orders.csv",
       "format": "CSV",
-      "record_count": 165,
-      "sha256": "ca7bc04ddc8d46d755fbfe252f0bc4bd69c227a185a6ffdbdf7b48cfec60fe13"
+      "record_count": 187,
+      "sha256": "7b065704aaa6d6470b256113ea062b28bb5daa2c6005bbf22ee69ef43790f3f5"
     },
     {
       "dataset_name": "orders",
       "file_name": "json/orders.json",
       "format": "JSON",
-      "record_count": 165,
-      "sha256": "d431a633935c5d3f9bcd3583c13bbcc99ba2cc0af0be270c6cdaf1eaf44efeb2"
+      "record_count": 187,
+      "sha256": "b11f881721c2bb996012af8e0fac9fafa16d09367b4dd970e20134a56929afdf"
     },
     {
       "dataset_name": "cost_records",
       "file_name": "csv/cost_records.csv",
       "format": "CSV",
-      "record_count": 230,
-      "sha256": "9be91a2163d1065122c1d7f7a1201641f41fd4508afa3c7a702be3778606a20f"
+      "record_count": 250,
+      "sha256": "29edaead799816a6aada6bd6014d7ef052ee304724744308eafe831339a3ded3"
     },
     {
       "dataset_name": "cost_records",
       "file_name": "json/cost_records.json",
       "format": "JSON",
-      "record_count": 230,
-      "sha256": "e3ea18466b21f0a5aab1541e25ff44190fe26bd7e1815ae7e31155a4fa8da59e"
+      "record_count": 250,
+      "sha256": "eddbe6cb0ae698502cb610689878d47f93bbd82c901dc3099971a2d375c342eb"
+    },
+    {
+      "dataset_name": "campaign_channels",
+      "file_name": "csv/campaign_channels.csv",
+      "format": "CSV",
+      "record_count": 94,
+      "sha256": "ce7137f902525c4507e6657c1344e278e911c2f017fb518d9cac3f21715bd99d"
+    },
+    {
+      "dataset_name": "campaign_channels",
+      "file_name": "json/campaign_channels.json",
+      "format": "JSON",
+      "record_count": 94,
+      "sha256": "134b4242809685fcac9bd2253f6ce9b044d313b71116599a4eb7e638c68b3395"
+    },
+    {
+      "dataset_name": "campaign_audiences",
+      "file_name": "csv/campaign_audiences.csv",
+      "format": "CSV",
+      "record_count": 50,
+      "sha256": "2517cf53fb565fe8515523cae7c0e54ea55dbe6875f2bbcd95a38a0e915fc1f9"
+    },
+    {
+      "dataset_name": "campaign_audiences",
+      "file_name": "json/campaign_audiences.json",
+      "format": "JSON",
+      "record_count": 50,
+      "sha256": "350cebf1a64947128f21f8eb23b6e905b57957e43a7c782f9cd557f2c1cdae75"
+    },
+    {
+      "dataset_name": "campaign_creatives",
+      "file_name": "csv/campaign_creatives.csv",
+      "format": "CSV",
+      "record_count": 50,
+      "sha256": "c83a5ffe46d5a0359abea05cc9a7cbf510b576bf13f74d6aaf5f1fe035257de8"
+    },
+    {
+      "dataset_name": "campaign_creatives",
+      "file_name": "json/campaign_creatives.json",
+      "format": "JSON",
+      "record_count": 50,
+      "sha256": "6f4f79d5c5fb322a10853613d7880aad283f11b2365a986d96e8c2b48d49a876"
+    },
+    {
+      "dataset_name": "contact_identities",
+      "file_name": "csv/contact_identities.csv",
+      "format": "CSV",
+      "record_count": 4401,
+      "sha256": "052e786b8d1d7a367c4991858ba8f207dd6cea2db41cc580027e4d8b556f4cd3"
+    },
+    {
+      "dataset_name": "contact_identities",
+      "file_name": "json/contact_identities.json",
+      "format": "JSON",
+      "record_count": 4401,
+      "sha256": "c3d1de601a3a27b8ab40c9db1b613827a57c1bf8760cdb706618524e95daaac0"
     },
     {
       "dataset_name": "attribution_results",
       "file_name": "csv/attribution_results.csv",
       "format": "CSV",
-      "record_count": 1043,
-      "sha256": "a00a10a14d172951e273617bfb7e9fb9723e848985e2e516d7d2ea5d6b3ffadf"
+      "record_count": 1388,
+      "sha256": "9d300ccabcebaafdf8a5d8f47193b3718274e157965abc0767973a87c54dbc60"
     },
     {
       "dataset_name": "attribution_results",
       "file_name": "json/attribution_results.json",
       "format": "JSON",
-      "record_count": 1043,
-      "sha256": "ed74a953c5b097de3a9cdc83930e1c3428e0a9beb38fce25edc998cc832d8e30"
+      "record_count": 1388,
+      "sha256": "6e8456d37012c8d94139acb0c36322f8038f4ede11e3d47d813892146166a080"
     },
     {
       "dataset_name": "anomaly_issues",
       "file_name": "csv/anomaly_issues.csv",
       "format": "CSV",
-      "record_count": 64,
-      "sha256": "8871935b79b283cdf7f9df9295d10b47121059afb82a8fd643df2cb6199050a1"
+      "record_count": 63,
+      "sha256": "76f9555520989e68cde342808f98f7291e71e99c267172527d6f9e6ebfa47e21"
     },
     {
       "dataset_name": "anomaly_issues",
       "file_name": "json/anomaly_issues.json",
       "format": "JSON",
-      "record_count": 64,
-      "sha256": "661fc8b1ba1005171928d41acea54c000f58aa9641381b57bf6e678610fffcd9"
+      "record_count": 63,
+      "sha256": "b0000e9c1e2bb5621ef0c084c6daacfb91c5e9b1bc5bcd8a1dbe22229b01a801"
     },
     {
       "dataset_name": "validation_results",
       "file_name": "csv/validation_results.csv",
       "format": "CSV",
       "record_count": 15,
-      "sha256": "aa731488474851f8f66670dcb6f9ffa3fcba247f21616c0f4226d79d7384f769"
+      "sha256": "98e8bfcc035adf8acf3172491dae9547ff17dd6425161b9061fdfd64179815e5"
     },
     {
       "dataset_name": "validation_results",
       "file_name": "json/validation_results.json",
       "format": "JSON",
       "record_count": 15,
-      "sha256": "4a811d65eb7076bd9aea481a4b2f9a54668fc319af9b661f812d23729e50459d"
+      "sha256": "e599d8fe3474d0c8be83fdb36579706dc15641f1d5b5372641001348cbeb1af2"
     },
     {
       "dataset_name": "attribution_models",
       "file_name": "csv/attribution_models.csv",
       "format": "CSV",
       "record_count": 3,
-      "sha256": "22ead08ed377c4a6e24b1dbb4e2c7188f8fa147a8374f46a1389b9d16f97f7f0"
+      "sha256": "ad53361ead0ab8758530d317bfb733f42cb59833e4eaa0a8b300ca8e7098909c"
     },
     {
       "dataset_name": "attribution_models",
       "file_name": "json/attribution_models.json",
       "format": "JSON",
       "record_count": 3,
-      "sha256": "3a2647b0b09a38cceb4e0b23b965335eb0973802e12570a65fd22e05bbce11c3"
+      "sha256": "bfabf0d871295f4a491c42cda900a116e901fea3eac8781e24596792ae795cc0"
     },
     {
       "dataset_name": "full_sql_seed",
       "file_name": "sql/seed_data.sql",
       "format": "SQL",
-      "record_count": 12554,
-      "sha256": "985043f4dc5f5c4b26cf49ae5cd2c674edbddbaa60501268a9f35daf52e7cffb"
+      "record_count": 13632,
+      "sha256": "3675efbf696c19beed8b562ece428ec0969913b37313e30de98be6794259e471"
     }
   ]
 }

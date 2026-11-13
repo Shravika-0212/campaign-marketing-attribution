@@ -1,10 +1,37 @@
-# YottaFlex Marketing Attribution and ROI Analytics Platform
-.env
+# Marketing Attribution and ROI Analytics Platform
+# Python Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache & artifacts
 __pycache__/
 *.pyc
-*.sqlite3
-*.db
-node_modules/
-dist/
-.coverage
+*.pyo
+*.pyd
 .pytest_cache/
+.coverage
+htmlcov/
+
+# Environment Variables
+.env
+.env.local
+
+# Database files
+*.sqlite3
+*.sqlite3-shm
+*.sqlite3-wal
+*.db
+
+# Frontend dependencies & build output
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo

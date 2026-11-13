@@ -60,6 +60,19 @@ def test_customer_journey_endpoint(client):
     assert jdata["contact_id"] == contact_id
     assert len(jdata["events"]) > 0
 
+def test_shravika_kavati_journey_api(client):
+    res = client.get("/api/contacts/CON-2026-000001/journey")
+    assert res.status_code == 200
+    jdata = res.json()
+    assert jdata["contact_name"] == "Shravika Kavati"
+    assert jdata["email"] == "shravika.kavati@gmail.com"
+    assert len(jdata["events"]) > 0
+    # Verify events include amounts formatted with INR (₹)
+    order_events = [e for e in jdata["events"] if e["event_type"] == "ORDER"]
+    assert len(order_events) > 0
+    for oe in order_events:
+        assert "₹" in oe["description"]
+
 def test_anomalies_endpoint(client):
     res = client.get("/api/anomalies")
     assert res.status_code == 200
@@ -72,3 +85,28 @@ def test_validation_report_endpoint(client):
     assert res.status_code == 200
     data = res.json()
     assert data["summary"]["total_rules"] == 15
+
+def test_chronological_evaluation_periods_endpoint(client):
+    res = client.get("/api/evaluation/chronological-periods")
+    assert res.status_code == 200
+    data = res.json()
+    assert data["status"] == "SUCCESS"
+    assert data["total_periods"] == 3
+    period_codes = [p["period_code"] for p in data["periods"]]
+    assert "TRAIN" in period_codes
+    assert "VALIDATION" in period_codes
+    assert "TEST" in period_codes
+    for p in data["periods"]:
+        assert "start_date" in p
+        assert "end_date" in p
+        assert p["orders_count"] >= 0
+        assert p["order_revenue"] >= 0.0
+
+def test_exports_ground_truth_download_endpoint(client):
+    res_csv = client.get("/api/exports/ground-truth/csv")
+    assert res_csv.status_code == 200
+    assert len(res_csv.content) > 0
+
+    res_json = client.get("/api/exports/ground-truth/json")
+    assert res_json.status_code == 200
+    assert len(res_json.content) > 0

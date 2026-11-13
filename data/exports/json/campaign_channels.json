@@ -1,0 +1,472 @@
+[
+  {
+    "campaign_id": "CMP-2026-000001",
+    "channel_id": "CHN-PAID-SEARCH",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000001",
+    "channel_id": "CHN-EMAIL",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000002",
+    "channel_id": "CHN-ORGANIC",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000002",
+    "channel_id": "CHN-EMAIL",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000003",
+    "channel_id": "CHN-EMAIL",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000003",
+    "channel_id": "CHN-ORGANIC",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000004",
+    "channel_id": "CHN-SOCIAL",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000004",
+    "channel_id": "CHN-DIRECT",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000005",
+    "channel_id": "CHN-DISPLAY",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000005",
+    "channel_id": "CHN-EVENT",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000006",
+    "channel_id": "CHN-EVENT",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000006",
+    "channel_id": "CHN-ORGANIC",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000007",
+    "channel_id": "CHN-REFERRAL",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000007",
+    "channel_id": "CHN-EVENT",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000008",
+    "channel_id": "CHN-DIRECT",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000008",
+    "channel_id": "CHN-REFERRAL",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000009",
+    "channel_id": "CHN-PAID-SEARCH",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000009",
+    "channel_id": "CHN-REFERRAL",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000010",
+    "channel_id": "CHN-ORGANIC",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000010",
+    "channel_id": "CHN-EVENT",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000011",
+    "channel_id": "CHN-EMAIL",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000011",
+    "channel_id": "CHN-ORGANIC",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000012",
+    "channel_id": "CHN-SOCIAL",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000012",
+    "channel_id": "CHN-ORGANIC",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000013",
+    "channel_id": "CHN-DISPLAY",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000013",
+    "channel_id": "CHN-REFERRAL",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000014",
+    "channel_id": "CHN-EVENT",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000014",
+    "channel_id": "CHN-PAID-SEARCH",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000015",
+    "channel_id": "CHN-REFERRAL",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000015",
+    "channel_id": "CHN-EVENT",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000016",
+    "channel_id": "CHN-DIRECT",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000016",
+    "channel_id": "CHN-ORGANIC",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000017",
+    "channel_id": "CHN-PAID-SEARCH",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000018",
+    "channel_id": "CHN-ORGANIC",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000018",
+    "channel_id": "CHN-REFERRAL",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000019",
+    "channel_id": "CHN-EMAIL",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000019",
+    "channel_id": "CHN-EVENT",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000020",
+    "channel_id": "CHN-SOCIAL",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000020",
+    "channel_id": "CHN-DIRECT",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000021",
+    "channel_id": "CHN-DISPLAY",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000021",
+    "channel_id": "CHN-REFERRAL",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000022",
+    "channel_id": "CHN-EVENT",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000023",
+    "channel_id": "CHN-REFERRAL",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000023",
+    "channel_id": "CHN-DISPLAY",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000024",
+    "channel_id": "CHN-DIRECT",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000025",
+    "channel_id": "CHN-PAID-SEARCH",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000025",
+    "channel_id": "CHN-SOCIAL",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000026",
+    "channel_id": "CHN-ORGANIC",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000026",
+    "channel_id": "CHN-EMAIL",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000027",
+    "channel_id": "CHN-EMAIL",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000027",
+    "channel_id": "CHN-REFERRAL",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000028",
+    "channel_id": "CHN-SOCIAL",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000028",
+    "channel_id": "CHN-EVENT",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000029",
+    "channel_id": "CHN-DISPLAY",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000029",
+    "channel_id": "CHN-SOCIAL",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000030",
+    "channel_id": "CHN-EVENT",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000030",
+    "channel_id": "CHN-DIRECT",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000031",
+    "channel_id": "CHN-REFERRAL",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000031",
+    "channel_id": "CHN-SOCIAL",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000032",
+    "channel_id": "CHN-DIRECT",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000033",
+    "channel_id": "CHN-PAID-SEARCH",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000033",
+    "channel_id": "CHN-EVENT",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000034",
+    "channel_id": "CHN-ORGANIC",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000034",
+    "channel_id": "CHN-DISPLAY",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000035",
+    "channel_id": "CHN-EMAIL",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000035",
+    "channel_id": "CHN-DIRECT",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000036",
+    "channel_id": "CHN-SOCIAL",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000036",
+    "channel_id": "CHN-EMAIL",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000037",
+    "channel_id": "CHN-DISPLAY",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000037",
+    "channel_id": "CHN-EVENT",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000038",
+    "channel_id": "CHN-EVENT",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000038",
+    "channel_id": "CHN-SOCIAL",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000039",
+    "channel_id": "CHN-REFERRAL",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000040",
+    "channel_id": "CHN-DIRECT",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000040",
+    "channel_id": "CHN-EMAIL",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000041",
+    "channel_id": "CHN-PAID-SEARCH",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000042",
+    "channel_id": "CHN-ORGANIC",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000042",
+    "channel_id": "CHN-DISPLAY",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000043",
+    "channel_id": "CHN-EMAIL",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000043",
+    "channel_id": "CHN-DISPLAY",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000044",
+    "channel_id": "CHN-SOCIAL",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000044",
+    "channel_id": "CHN-DISPLAY",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000045",
+    "channel_id": "CHN-DISPLAY",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000045",
+    "channel_id": "CHN-ORGANIC",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000046",
+    "channel_id": "CHN-EVENT",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000046",
+    "channel_id": "CHN-DISPLAY",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000047",
+    "channel_id": "CHN-REFERRAL",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000047",
+    "channel_id": "CHN-SOCIAL",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000048",
+    "channel_id": "CHN-DIRECT",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000048",
+    "channel_id": "CHN-EVENT",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000049",
+    "channel_id": "CHN-PAID-SEARCH",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000049",
+    "channel_id": "CHN-DISPLAY",
+    "is_primary": false
+  },
+  {
+    "campaign_id": "CMP-2026-000050",
+    "channel_id": "CHN-ORGANIC",
+    "is_primary": true
+  },
+  {
+    "campaign_id": "CMP-2026-000050",
+    "channel_id": "CHN-DIRECT",
+    "is_primary": false
+  }
+]

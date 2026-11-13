@@ -12,16 +12,16 @@ sys.path.insert(0, str(root_dir))
 
 from backend.app.models.database import SessionLocal, reset_db
 from backend.app.generators.synthetic_data import SyntheticDataGenerator
-from backend.app.generators.config import STARTER_CONFIG, FULL_CONFIG, RANDOM_SEED
+from backend.app.generators.config import get_dataset_config, RANDOM_SEED
 from backend.app.attribution.engine import AttributionEngine
 from backend.app.analytics.anomaly_detector import AnomalyDetectionEngine
 from backend.app.validation.validator import ValidationEngine
 from backend.app.services.export_service import ExportService
 
 def run_pipeline(config_name: str = "STARTER", seed: int = RANDOM_SEED):
-    config = FULL_CONFIG if config_name.upper() == "FULL" else STARTER_CONFIG
+    config = get_dataset_config(config_name)
     print("=" * 65)
-    print(f"YOTTAFLEX MARKETING ATTRIBUTION PIPELINE: [{config.name}] (SEED: {seed})")
+    print(f"MARKETING ATTRIBUTION ANALYTICS PIPELINE: [{config.name}] (SEED: {seed})")
     print("=" * 65)
 
     print("\n[Step 1/5] Resetting database & generating synthetic records...")
@@ -49,10 +49,15 @@ def run_pipeline(config_name: str = "STARTER", seed: int = RANDOM_SEED):
         val_summary = val.run_all_validations()
         print(f" -> Validation completed: {val_summary['summary']['rules_passed']} PASS, {val_summary['summary']['rules_warned']} WARN, {val_summary['summary']['rules_failed']} FAIL")
 
-        print("\n[Step 5/5] Exporting CSV, JSON, SQL seed, and manifest...")
+        print("\n[Step 5/6] Exporting CSV, JSON, SQL seed, and manifest...")
         exporter = ExportService(db)
         exp_summary = exporter.export_all(config_name=config.name, seed=seed)
         print(f" -> Export complete: {exp_summary['total_files_exported']} files exported. Manifest: {exp_summary['manifest_file']}")
+
+        print("\n[Step 6/6] Generating publication-quality charts using Matplotlib & Pandas...")
+        from backend.app.analytics.visualizations import generate_all_analytics_charts
+        charts_summary = generate_all_analytics_charts(db)
+        print(f" -> Generated {charts_summary['charts_generated']} analytics charts in {charts_summary['directory']}")
 
         print("\n" + "=" * 65)
         print("PIPELINE EXECUTED SUCCESSFULLY")
@@ -63,7 +68,7 @@ def run_pipeline(config_name: str = "STARTER", seed: int = RANDOM_SEED):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run complete marketing attribution pipeline")
-    parser.add_argument("--config", choices=["STARTER", "FULL"], default="STARTER", help="Dataset size config")
+    parser.add_argument("--config", choices=["STARTER", "FULL", "FULL_BASELINE", "FULL BASELINE"], default="STARTER", help="Dataset size config")
     parser.add_argument("--seed", type=int, default=RANDOM_SEED, help="Random generation seed")
     args = parser.parse_args()
     run_pipeline(config_name=args.config, seed=args.seed)

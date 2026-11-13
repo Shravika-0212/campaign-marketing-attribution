@@ -12,6 +12,32 @@ class HealthResponse(BaseModel):
     database: str
     timestamp: str
 
+class ActorProfileResponse(BaseModel):
+    user_id: str
+    name: str
+    email: str
+    role: str
+    role_name: str
+    title: str
+    contact_id: Optional[str] = None
+    avatar_badge: str
+    description: str
+    permissions: List[str] = []
+    allowed_pages: List[str] = []
+
+class AuthMeResponse(BaseModel):
+    user_id: str
+    name: str
+    email: str
+    role: str
+    role_name: str
+    title: str
+    contact_id: Optional[str] = None
+    avatar_badge: str
+    description: str
+    permissions: List[str]
+    allowed_pages: List[str]
+
 # ==========================================
 # Dashboard & Analytics Schemas
 # ==========================================
@@ -28,6 +54,10 @@ class DashboardSummaryResponse(BaseModel):
     unattributed_revenue: float
     excluded_duplicate_revenue: float
     excluded_duplicate_orders_count: int
+    currency_mismatch_count: Optional[int] = 0
+    excluded_foreign_spend: Optional[float] = 0.0
+    quarantined_currencies: Optional[List[str]] = []
+    is_reconciled: Optional[bool] = True
     overall_roi: Optional[float]
     cost_per_lead: float
     cost_per_acquisition: float
@@ -50,6 +80,8 @@ class CampaignListItem(BaseModel):
     campaign_name: str
     channel_id: str
     status: str
+    status_display: Optional[str] = None
+    is_incomplete: Optional[bool] = False
     budget: float
     actual_spend: float
     attributed_revenue: float
@@ -77,6 +109,8 @@ class CampaignDetailResponse(BaseModel):
     budget: float
     actual_spend: float
     status: str
+    status_display: Optional[str] = None
+    is_incomplete: Optional[bool] = False
     start_date: str
     end_date: Optional[str]
     creatives: List[Dict[str, Any]]
@@ -87,6 +121,7 @@ class CampaignDetailResponse(BaseModel):
     conversions_count: int
     attributed_revenue: float
     roi: Optional[float]
+    roi_status: Optional[str] = "CALCULATED"
 
 # ==========================================
 # Customer Journey Schemas
@@ -132,6 +167,11 @@ class AttributionCompareItem(BaseModel):
 
 class AttributionCompareResponse(BaseModel):
     campaigns: List[AttributionCompareItem]
+    total_eligible_revenue: float = 0.0
+    total_first_touch_revenue: float = 0.0
+    total_last_touch_revenue: float = 0.0
+    total_multi_touch_revenue: float = 0.0
+    is_fully_reconciled: bool = True
 
 # ==========================================
 # Anomaly Schemas
@@ -160,7 +200,7 @@ class AnomalyDashboardResponse(BaseModel):
 # Generator & Validation Schemas
 # ==========================================
 class GeneratorRunRequest(BaseModel):
-    config_name: str = Field("STARTER", pattern="^(STARTER|FULL)$")
+    config_name: str = Field("STARTER", pattern="^(STARTER|FULL|FULL_BASELINE|FULL BASELINE)$")
     seed: int = Field(20261022)
 
 class GeneratorStatusResponse(BaseModel):
@@ -170,3 +210,27 @@ class GeneratorStatusResponse(BaseModel):
     status: Optional[str]
     row_counts: Dict[str, int]
     completed_at: Optional[str]
+
+# ==========================================
+# Chronological Evaluation Schemas
+# ==========================================
+class ChronologicalPeriodItem(BaseModel):
+    period_code: str
+    name: str
+    start_date: str
+    end_date: str
+    duration_days: int
+    purpose: str
+    orders_count: int
+    order_revenue: float
+    attributed_revenue_multi_touch: float
+    touchpoints_count: int
+    campaign_spend: float
+    anomalies_detected: int
+
+class ChronologicalPeriodsResponse(BaseModel):
+    status: str
+    total_periods: int
+    boundaries_summary: str
+    periods: List[ChronologicalPeriodItem]
+

@@ -73,7 +73,7 @@ $$\text{AttributedRevenue}(C) = \sum_{r \in \text{Results}(C)} r.\text{attribute
 
 Campaign spend is derived strictly from validated base currency (`USD`) cost records:
 
-$$\text{Spend}(C) = \sum_{k \in \text{Costs}(C), k.\text{currency} = \text{'USD'}} k.\text{amount}$$
+$$\text{Spend}(C) = \sum_{k \in \text{Costs}(C), k.\text{currency} = \text{'INR'}} k.\text{amount}$$
 
 $$\text{ROI}(C) = \begin{cases} \left(\frac{\text{AttributedRevenue}(C) - \text{Spend}(C)}{\text{Spend}(C)}\right) \times 100 & \text{if } \text{Spend}(C) > 0 \\ \text{None (Unavailable / Missing Cost)} & \text{if } \text{Spend}(C) \le 0 \end{cases}$$
 

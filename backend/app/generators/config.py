@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from datetime import datetime
 
 RANDOM_SEED = 20261022
-BASE_CURRENCY = "USD"
+BASE_CURRENCY = "INR"
 LOOKBACK_WINDOW_DAYS = 90
 
 # Chronological Period Boundaries
@@ -54,9 +54,9 @@ STARTER_CONFIG = DatasetConfig(
     unsupported_identity_links_count=15
 )
 
-# FULL: The exact volume required by the specification
-FULL_CONFIG = DatasetConfig(
-    name="FULL",
+# FULL BASELINE: The exact volume required by the specification
+FULL_BASELINE_CONFIG = DatasetConfig(
+    name="FULL_BASELINE",
     num_campaigns=500,
     num_contacts=50000,
     num_touchpoints=200000,
@@ -69,3 +69,17 @@ FULL_CONFIG = DatasetConfig(
     missing_cost_campaigns_count=15,
     unsupported_identity_links_count=200
 )
+
+# Alias for backwards compatibility
+FULL_CONFIG = FULL_BASELINE_CONFIG
+
+def get_dataset_config(name_or_alias: str) -> DatasetConfig:
+    """Return appropriate DatasetConfig based on name or alias."""
+    cleaned = (name_or_alias or "").strip().upper().replace(" ", "_").replace("-", "_")
+    if cleaned in ("FULL", "FULL_BASELINE", "FULLBASELINE"):
+        return FULL_BASELINE_CONFIG
+    elif cleaned == "STARTER":
+        return STARTER_CONFIG
+    else:
+        raise ValueError(f"Unknown dataset config: '{name_or_alias}'. Supported: 'STARTER', 'FULL_BASELINE'.")
+

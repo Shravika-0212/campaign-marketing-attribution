@@ -70,7 +70,7 @@ class Campaign(Base, TimestampMixin):
     name: Mapped[str] = mapped_column(String(150), nullable=False)
     channel_id: Mapped[str] = mapped_column(String(50), ForeignKey("channels.channel_id"), nullable=False)
     budget: Mapped[float] = mapped_column(Float, nullable=False, default=0.0)
-    currency: Mapped[str] = mapped_column(String(10), nullable=False, default="USD")
+    currency: Mapped[str] = mapped_column(String(10), nullable=False, default="INR")
     status: Mapped[str] = mapped_column(String(20), nullable=False, default="ACTIVE") # DRAFT, ACTIVE, PAUSED, COMPLETED
     start_date: Mapped[datetime] = mapped_column(DateTime, nullable=False)
     end_date: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
@@ -239,7 +239,7 @@ class Order(Base):
     order_number: Mapped[str] = mapped_column(String(50), nullable=False)
     order_date: Mapped[datetime] = mapped_column(DateTime, nullable=False)
     amount: Mapped[float] = mapped_column(Float, nullable=False)
-    currency: Mapped[str] = mapped_column(String(10), nullable=False, default="USD")
+    currency: Mapped[str] = mapped_column(String(10), nullable=False, default="INR")
     status: Mapped[str] = mapped_column(String(30), nullable=False, default="COMPLETED") # PENDING, COMPLETED, CANCELLED, REFUNDED
     is_duplicate_flag: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False) # For tracking injected duplicate order anomaly
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
@@ -266,7 +266,7 @@ class CostRecord(Base):
     channel_id: Mapped[str] = mapped_column(String(50), ForeignKey("channels.channel_id"), nullable=False)
     recorded_date: Mapped[datetime] = mapped_column(DateTime, nullable=False)
     amount: Mapped[float] = mapped_column(Float, nullable=False)
-    currency: Mapped[str] = mapped_column(String(10), nullable=False, default="USD")
+    currency: Mapped[str] = mapped_column(String(10), nullable=False, default="INR")
     cost_type: Mapped[str] = mapped_column(String(30), nullable=False) # MEDIA_SPEND, AGENCY_FEE, PRODUCTION
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
 
